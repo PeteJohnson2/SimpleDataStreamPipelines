@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.1</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>de.xxx</groupId>
 	<artifactId>dbtorest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>DatabaseToRest</name>
 	<description>Pipeline from Db to Rest Endpoint</description>
-	<url/>
+	<url />
 	<licenses>
-		<license/>
+		<license />
 	</licenses>
 	<developers>
-		<developer/>
+		<developer />
 	</developers>
 	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
+		<connection />
+		<developerConnection />
+		<tag />
+		<url />
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<debezium.version>3.0.5.Final</debezium.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -43,18 +45,25 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
 		</dependency>
-
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
+			<groupId>io.debezium</groupId>
+			<artifactId>debezium-api</artifactId>
+			<version>${debezium.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.debezium</groupId>
+			<artifactId>debezium-embedded</artifactId>
+			<version>${debezium.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.debezium</groupId>
+			<artifactId>debezium-connector-postgres</artifactId>
+			<version>${debezium.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
