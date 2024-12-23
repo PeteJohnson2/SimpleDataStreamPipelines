@@ -10,7 +10,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package de.xxx.dbtorest.adapter.debezium;
+package de.xxx.dbtorest.debezium;
 
 import java.io.IOException;
 import java.util.Properties;

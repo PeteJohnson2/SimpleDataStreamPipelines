@@ -14,19 +14,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>DatabaseToRest</name>
 	<description>Pipeline from Db to Rest Endpoint</description>
-	<url />
-	<licenses>
-		<license />
-	</licenses>
-	<developers>
-		<developer />
-	</developers>
-	<scm>
-		<connection />
-		<developerConnection />
-		<tag />
-		<url />
-	</scm>
 	<properties>
 		<java.version>21</java.version>
 		<debezium.version>3.0.5.Final</debezium.version>
