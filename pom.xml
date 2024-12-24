@@ -26,6 +26,7 @@
     </licenses>
     <modules>
         <module>database-to-rest</module>
+        <module>source-sink</module>
     </modules>
 
 </project>
