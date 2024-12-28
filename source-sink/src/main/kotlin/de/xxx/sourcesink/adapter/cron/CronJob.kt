@@ -10,14 +10,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package de.xxx.sourcesink
+package de.xxx.sourcesink.adapter.cron
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import de.xxx.sourcesink.usecase.service.OrderService
+import org.springframework.scheduling.annotation.Scheduled
+import org.springframework.stereotype.Component
 
-@SpringBootApplication
-class SourcesinkApplication
-
-fun main(args: Array<String>) {
-	runApplication<SourcesinkApplication>(*args)
+@Component
+class CronJob(val orderService: OrderService) {
+    @Scheduled(fixedDelay = 1000)
+    fun generateOrders() {
+        this.orderService.generateOrder()
+    }
 }

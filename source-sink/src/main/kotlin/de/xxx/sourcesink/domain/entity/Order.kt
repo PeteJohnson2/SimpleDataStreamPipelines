@@ -10,14 +10,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package de.xxx.sourcesink
+package de.xxx.sourcesink.domain.entity
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import java.util.UUID
 
-@SpringBootApplication
-class SourcesinkApplication
-
-fun main(args: Array<String>) {
-	runApplication<SourcesinkApplication>(*args)
-}
+@Entity
+class Order(
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    var id: UUID,
+    var productName: String,
+    var productQuantity: Int){ }

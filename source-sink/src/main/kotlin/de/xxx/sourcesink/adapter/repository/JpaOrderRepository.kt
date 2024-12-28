@@ -10,14 +10,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package de.xxx.sourcesink
+package de.xxx.sourcesink.adapter.repository
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import de.xxx.sourcesink.domain.entity.Order
+import org.apache.kafka.common.protocol.types.Field.UUID
+import org.springframework.data.jpa.repository.JpaRepository
 
-@SpringBootApplication
-class SourcesinkApplication
-
-fun main(args: Array<String>) {
-	runApplication<SourcesinkApplication>(*args)
+interface JpaOrderRepository: JpaRepository<Order,UUID> {
 }

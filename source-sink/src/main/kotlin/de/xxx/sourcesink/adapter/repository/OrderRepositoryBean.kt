@@ -10,14 +10,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package de.xxx.sourcesink
+package de.xxx.sourcesink.adapter.repository
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import de.xxx.sourcesink.domain.entity.OrderRepository
+import org.springframework.stereotype.Repository
 
-@SpringBootApplication
-class SourcesinkApplication
-
-fun main(args: Array<String>) {
-	runApplication<SourcesinkApplication>(*args)
+@Repository
+class OrderRepositoryBean(val jpaOrderRepository: JpaOrderRepository): OrderRepository {
 }

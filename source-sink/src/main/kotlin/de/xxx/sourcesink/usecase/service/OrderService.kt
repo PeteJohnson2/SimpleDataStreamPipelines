@@ -10,14 +10,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package de.xxx.sourcesink
+package de.xxx.sourcesink.usecase.service
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import de.xxx.sourcesink.domain.entity.OrderRepository
+import org.springframework.stereotype.Service
 
-@SpringBootApplication
-class SourcesinkApplication
+@Service
+class OrderService(val orderRepository: OrderRepository) {
 
-fun main(args: Array<String>) {
-	runApplication<SourcesinkApplication>(*args)
+
+    fun generateOrder() {
+
+    }
 }

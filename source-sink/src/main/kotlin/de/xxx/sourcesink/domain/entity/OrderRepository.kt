@@ -10,14 +10,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package de.xxx.sourcesink
+package de.xxx.sourcesink.domain.entity
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
-
-@SpringBootApplication
-class SourcesinkApplication
-
-fun main(args: Array<String>) {
-	runApplication<SourcesinkApplication>(*args)
+interface OrderRepository {
 }
