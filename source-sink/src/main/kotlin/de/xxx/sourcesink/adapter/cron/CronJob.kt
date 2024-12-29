@@ -13,10 +13,12 @@ limitations under the License.
 package de.xxx.sourcesink.adapter.cron
 
 import de.xxx.sourcesink.usecase.service.OrderService
+import org.springframework.context.annotation.Configuration
+import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.scheduling.annotation.Scheduled
-import org.springframework.stereotype.Component
 
-@Component
+@Configuration
+@EnableScheduling
 class CronJob(val orderService: OrderService) {
     @Scheduled(fixedDelay = 1000)
     fun generateOrders() {

@@ -19,9 +19,19 @@ import jakarta.persistence.Id
 import java.util.UUID
 
 @Entity
-class Order(
+class OrderProduct(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    var id: UUID,
+    var id: UUID?,
     var productName: String,
-    var productQuantity: Int){ }
+    var productQuantity: Int,
+    var orderState: OrderState
+) {
+    override fun toString(): String {
+        return "OrderProduct(id=$id, productName='$productName', productQuantity=$productQuantity, orderState=$orderState)"
+    }
+}
+
+enum class OrderState {
+    OPEN,PAYED,SEND
+}

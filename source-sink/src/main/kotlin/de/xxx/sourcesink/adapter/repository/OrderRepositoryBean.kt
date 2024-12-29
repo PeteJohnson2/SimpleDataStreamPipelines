@@ -12,9 +12,25 @@ limitations under the License.
  */
 package de.xxx.sourcesink.adapter.repository
 
+import de.xxx.sourcesink.domain.entity.OrderProduct
 import de.xxx.sourcesink.domain.entity.OrderRepository
 import org.springframework.stereotype.Repository
 
 @Repository
 class OrderRepositoryBean(val jpaOrderRepository: JpaOrderRepository): OrderRepository {
+    override fun findAll() : MutableList<OrderProduct> {
+        return this.jpaOrderRepository.findAll()
+    }
+
+    override fun save(order: OrderProduct): OrderProduct {
+        return this.jpaOrderRepository.save(order)
+    }
+
+    override fun saveAll(orders: MutableList<OrderProduct>): MutableList<OrderProduct> {
+        return this.jpaOrderRepository.saveAll(orders)
+    }
+
+    override fun deleteAll() {
+        return this.jpaOrderRepository.deleteAll()
+    }
 }

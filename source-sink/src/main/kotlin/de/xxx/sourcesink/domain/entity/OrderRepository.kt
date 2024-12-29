@@ -13,4 +13,8 @@ limitations under the License.
 package de.xxx.sourcesink.domain.entity
 
 interface OrderRepository {
+    fun findAll() : MutableList<OrderProduct>
+    fun save(order: OrderProduct): OrderProduct
+    fun saveAll(orders: MutableList<OrderProduct>): MutableList<OrderProduct>
+    fun deleteAll()
 }

@@ -12,9 +12,9 @@ limitations under the License.
  */
 package de.xxx.sourcesink.adapter.repository
 
-import de.xxx.sourcesink.domain.entity.Order
+import de.xxx.sourcesink.domain.entity.OrderProduct
 import org.apache.kafka.common.protocol.types.Field.UUID
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface JpaOrderRepository: JpaRepository<Order,UUID> {
+interface JpaOrderRepository: JpaRepository<OrderProduct,UUID> {
 }
