@@ -18,6 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import io.debezium.engine.format.ChangeEventFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,34 +34,34 @@ import jakarta.annotation.PreDestroy;
 @Component
 public class DebeziumRunner {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DebeziumRunner.class);
-    @Value("${customer.datasource.host}")
+    @Value("${datasource.host:localhost}")
     private String customerDbHost;
 
-    @Value("${customer.datasource.database}")
+    @Value("${datasource.database}")
     private String customerDbName;
 
-    @Value("${customer.datasource.port}")
+    @Value("${datasource.port:5432}")
     private String customerDbPort;
 
-    @Value("${customer.datasource.username}")
+    @Value("${datasource.username}")
     private String customerDbUsername;
 
-    @Value("${customer.datasource.password}")
+    @Value("${datasource.password}")
     private String customerDbPassword;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @EventListener
     public void onEvent(ApplicationReadyEvent event) {
     	final Properties props = new Properties();
-    	props.setProperty("name", "engine");
+    	props.setProperty("name", "cdc-orderproduct");
     	props.setProperty("connector.class", "io.debezium.connector.postgresql.PostgresConnector");
     	props.setProperty("database.hostname", this.customerDbHost);
     	props.setProperty("database.port", this.customerDbPort);
     	props.setProperty("database.user", this.customerDbUsername);
     	props.setProperty("database.password", this.customerDbPassword);
-    	props.setProperty("database.dbname", "postgres");
+    	props.setProperty("database.dbname", this.customerDbName);
     	props.setProperty("topic.prefix", "stream");
-    	props.setProperty("table.include.list", "public.customer");
+    	props.setProperty("table.include.list", "public.order_product");
     	props.setProperty("offset.storage", "org.apache.kafka.connect.storage.FileOffsetBackingStore");
     	props.setProperty("offset.storage.file.filename", "./offsets.dat");
     	props.setProperty("offset.flush.interval.ms", "60000");
