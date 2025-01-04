@@ -49,6 +49,7 @@ public class DebeziumRunner {
     @Value("${datasource.password}")
     private String customerDbPassword;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
+	//private DebeziumEngine<ChangeEvent<String, String>> engine;
 
     @EventListener
     public void onEvent(ApplicationReadyEvent event) {
@@ -65,24 +66,27 @@ public class DebeziumRunner {
     	props.setProperty("offset.storage", "org.apache.kafka.connect.storage.FileOffsetBackingStore");
     	props.setProperty("offset.storage.file.filename", "./offsets.dat");
     	props.setProperty("offset.flush.interval.ms", "60000");
-    	
-    	try (DebeziumEngine<ChangeEvent<String, String>> engine = DebeziumEngine.create(Json.class)
+
+			/*
+		try{
+			this.engine = DebeziumEngine.create(Json.class)
     	        .using(props)
     	        .notifying(myRecord -> {
     	            LOGGER.info(myRecord.toString());
     	        })
-    	        .build()) {
-    		this.executor.execute(engine);
-    	} catch (IOException e) {    		
+    	        .build());
+    		this.executor.execute(this.engine);
+
+    	} catch (IOException e) {
     		throw new RuntimeException(e);
 		}
-    	
-    	
+    	*/
     }
     	
     	@PreDestroy
     	public void onShutdown() {
     		try {
+				//this.engine.close();
     		    executor.shutdown();
     		    while (!executor.awaitTermination(5, TimeUnit.SECONDS)) {
     		        LOGGER.info("Waiting another 5 seconds for the embedded engine to shut down");
