@@ -10,7 +10,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-package de.xxx.soaptodb.config;
+package de.xxx.soaptodb.kafka;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManagerFactory;

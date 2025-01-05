@@ -14,16 +14,28 @@ package de.xxx.soaptodb.source;
 
 import com.baeldung.springsoap.gen.Country;
 import com.baeldung.springsoap.gen.WsCurrency;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.xxx.soaptodb.kafka.KafkaClient;
+import de.xxx.soaptodb.model.CountryDto;
 import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
-public class CountryRepository {
+@Service
+@Transactional
+public class CountryService {
     private static final Map<String, Country> countries = new HashMap<>();
+    private final KafkaClient kafkaClient;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    public CountryService(KafkaClient kafkaClient) {
+        this.kafkaClient = kafkaClient;
+    }
 
     @PostConstruct
     public void initData() {
@@ -52,8 +64,11 @@ public class CountryRepository {
         countries.put(uk.getName(), uk);
     }
 
-    public Country findCountry(String name) {
+    public Country sendCountry(String name) {
         Assert.notNull(name, "The country's name must not be null");
-        return countries.get(name);
+        var country = countries.get(name);
+        var myCountry = new CountryDto(country);
+        this.kafkaClient.sendCountryMsg(myCountry);
+        return country;
     }
 }
