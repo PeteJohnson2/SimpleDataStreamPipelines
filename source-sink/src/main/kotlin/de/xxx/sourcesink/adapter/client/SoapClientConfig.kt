@@ -27,9 +27,9 @@ class SoapClientConfig {
     }
 
     @Bean
-    fun soapClient(marshaller: Jaxb2Marshaller?): SoapClient {
-        val client = SoapClient()
-        client.setDefaultUri("http://localhost:8080/ws")
+    fun soapClient(marshaller: Jaxb2Marshaller?): SoapClientBean {
+        val client = SoapClientBean()
+        client.setDefaultUri("http://localhost:8082/ws")
         client.setMarshaller(marshaller)
         client.setUnmarshaller(marshaller)
         return client

@@ -14,16 +14,15 @@ package de.xxx.sourcesink.adapter.client
 
 import com.baeldung.springsoap.client.gen.GetCountryRequest
 import com.baeldung.springsoap.client.gen.GetCountryResponse
+import de.xxx.sourcesink.domain.client.SoapClient
 import org.springframework.stereotype.Component
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport
 
 @Component
-class SoapClient(): WebServiceGatewaySupport() {
-    fun getCountry(country: String): GetCountryResponse {
+class SoapClientBean(): WebServiceGatewaySupport(), SoapClient {
+    override fun getCountry(country: String): GetCountryResponse {
         val request: GetCountryRequest = GetCountryRequest()
         request.setName(country)
-
-        logger.info("Requesting information for $country")
 
         val response: GetCountryResponse = webServiceTemplate.marshalSendAndReceive(request) as GetCountryResponse
 
