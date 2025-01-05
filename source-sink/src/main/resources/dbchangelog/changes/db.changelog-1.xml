@@ -25,4 +25,17 @@
             <column name="order_state" type="int"/>
         </createTable>
     </changeSet>
+    <changeSet id="2" author="angular2guy">
+        <createTable tableName="country">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints notNullConstraintName="country_name_notnull" nullable="false"/>
+            </column>
+            <column name="population" type="bigint"/>
+            <column name="capital" type="varchar(255)"/>
+            <column name="currency" type="varchar(10)"/>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>
