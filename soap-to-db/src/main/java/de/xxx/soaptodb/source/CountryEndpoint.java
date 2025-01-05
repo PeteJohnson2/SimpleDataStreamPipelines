@@ -12,8 +12,8 @@
  */
 package de.xxx.soaptodb.source;
 
-import io.spring.guides.gs_producing_web_service.GetCountryRequest;
-import io.spring.guides.gs_producing_web_service.GetCountryResponse;
+import com.baeldung.springsoap.gen.GetCountryRequest;
+import com.baeldung.springsoap.gen.GetCountryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -24,7 +24,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 @Endpoint
 public class CountryEndpoint {
     private static final Logger log = LoggerFactory.getLogger(CountryEndpoint.class);
-    private static final String NAMESPACE_URI = "http://spring.io/guides/gs-producing-web-service";
+    private static final String NAMESPACE_URI = "http://www.baeldung.com/springsoap/gen";
     private final CountryRepository countryRepository;
 
     public CountryEndpoint(CountryRepository countryRepository) {

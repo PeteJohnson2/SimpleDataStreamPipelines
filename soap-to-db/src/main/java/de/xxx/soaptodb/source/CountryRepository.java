@@ -12,10 +12,10 @@
  */
 package de.xxx.soaptodb.source;
 
+import com.baeldung.springsoap.gen.Country;
+import com.baeldung.springsoap.gen.WsCurrency;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
-import io.spring.guides.gs_producing_web_service.Country;
-import io.spring.guides.gs_producing_web_service.WsCurrency;
 import org.springframework.util.Assert;
 
 import java.util.HashMap;
