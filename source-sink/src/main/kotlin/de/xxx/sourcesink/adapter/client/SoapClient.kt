@@ -12,9 +12,21 @@ limitations under the License.
  */
 package de.xxx.sourcesink.adapter.client
 
+import com.baeldung.springsoap.client.gen.GetCountryRequest
+import com.baeldung.springsoap.client.gen.GetCountryResponse
 import org.springframework.stereotype.Component
+import org.springframework.ws.client.core.support.WebServiceGatewaySupport
 
 @Component
-class SoapClient {
+class SoapClient(): WebServiceGatewaySupport() {
+    fun getCountry(country: String): GetCountryResponse {
+        val request: GetCountryRequest = GetCountryRequest()
+        request.setName(country)
 
+        logger.info("Requesting information for $country")
+
+        val response: GetCountryResponse = webServiceTemplate.marshalSendAndReceive(request) as GetCountryResponse
+
+        return response
+    }
 }
