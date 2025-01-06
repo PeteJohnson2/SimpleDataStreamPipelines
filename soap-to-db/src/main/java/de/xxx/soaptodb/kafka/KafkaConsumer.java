@@ -56,7 +56,7 @@ public class KafkaConsumer {
             autoCreateTopics = "true", topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE)
     @KafkaListener(topics = KafkaConfig.COUNTRY_TOPIC)
     public void consumerForCountryTopic(String message) {
-        LOGGER.info("consumerForCountryTopic [{}]", message);
+        //LOGGER.info("consumerForCountryTopic [{}]", message);
         try {
             CountryDto dto = this.objectMapper.readValue(message, CountryDto.class);
             this.countrySinkService.handleReceivedCountry(dto);

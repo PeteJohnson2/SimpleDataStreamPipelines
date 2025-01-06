@@ -13,17 +13,41 @@
 package de.xxx.soaptodb.sink;
 
 import de.xxx.soaptodb.model.CountryDto;
+import de.xxx.soaptodb.sink.entity.Country;
+import de.xxx.soaptodb.sink.entity.CountryRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
 public class CountrySinkService {
     private static final Logger log = LoggerFactory.getLogger(CountrySinkService.class);
+    private final CountryRepository countryRepository;
+
+    public CountrySinkService(CountryRepository countryRepository) {
+        this.countryRepository = countryRepository;
+    }
+
+    @EventListener
+    public void init(ApplicationReadyEvent event) {
+        this.countryRepository.deleteAll();
+    }
 
     public void handleReceivedCountry(CountryDto countryDto) {
         log.info("CountryDto: {}", countryDto.toString());
+        this.countryRepository.save(this.map(countryDto));
+    }
+
+    private Country map(CountryDto dto) {
+        var entity = new Country();
+        entity.setCapital(dto.getCapital());
+        entity.setCurrency(dto.getCurrency().value());
+        entity.setPopulation((long) dto.getPopulation());
+        entity.setName(dto.getName());
+        return entity;
     }
 }
