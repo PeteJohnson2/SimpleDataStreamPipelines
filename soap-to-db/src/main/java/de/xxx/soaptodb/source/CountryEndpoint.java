@@ -26,9 +26,9 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 public class CountryEndpoint {
     private static final Logger log = LoggerFactory.getLogger(CountryEndpoint.class);
     private static final String NAMESPACE_URI = "http://www.baeldung.com/springsoap/gen";
-    private final CountryService countryService;
+    private final CountrySourceService countryService;
 
-    public CountryEndpoint(CountryService countryService, KafkaProducer kafkaProducer) {
+    public CountryEndpoint(CountrySourceService countryService, KafkaProducer kafkaProducer) {
         this.countryService = countryService;
     }
 

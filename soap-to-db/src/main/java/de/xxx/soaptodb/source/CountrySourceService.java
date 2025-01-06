@@ -28,12 +28,12 @@ import java.util.Map;
 
 @Service
 @Transactional
-public class CountryService {
-    private static final Logger log = LoggerFactory.getLogger(CountryService.class);
+public class CountrySourceService {
+    private static final Logger log = LoggerFactory.getLogger(CountrySourceService.class);
     private static final Map<String, Country> countries = new HashMap<>();
     private final KafkaProducer kafkaSender;
 
-    public CountryService(KafkaProducer kafkaClient) {
+    public CountrySourceService(KafkaProducer kafkaClient) {
         this.kafkaSender = kafkaClient;
     }
 
@@ -70,9 +70,5 @@ public class CountryService {
         var myCountry = new CountryDto(country);
         this.kafkaSender.sendCountryMsg(myCountry);
         return country;
-    }
-
-    public void handleReceivedCountry(CountryDto countryDto) {
-        log.info("CountryDto: {}", countryDto.toString());
     }
 }

@@ -16,7 +16,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.xxx.soaptodb.model.CountryDto;
 import de.xxx.soaptodb.model.KafkaEventDto;
-import de.xxx.soaptodb.source.CountryService;
+import de.xxx.soaptodb.sink.CountrySinkService;
+import de.xxx.soaptodb.source.CountrySourceService;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,12 +43,12 @@ import java.util.concurrent.TimeoutException;
 public class KafkaConsumer {
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumer.class);
     private final ObjectMapper objectMapper;
-    private final CountryService countryService;
+    private final CountrySinkService countrySinkService;
     private final KafkaTemplate<String,String> kafkaTemplate;
 
-    public KafkaConsumer(ObjectMapper objectMapper, CountryService countryService, KafkaTemplate<String,String> kafkaTemplate) {
+    public KafkaConsumer(ObjectMapper objectMapper, CountrySinkService countrySinkService, KafkaTemplate<String,String> kafkaTemplate) {
         this.objectMapper = objectMapper;
-        this.countryService = countryService;
+        this.countrySinkService = countrySinkService;
         this.kafkaTemplate = kafkaTemplate;
     }
 
@@ -58,7 +59,7 @@ public class KafkaConsumer {
         LOGGER.info("consumerForCountryTopic [{}]", message);
         try {
             CountryDto dto = this.objectMapper.readValue(message, CountryDto.class);
-            this.countryService.handleReceivedCountry(dto);
+            this.countrySinkService.handleReceivedCountry(dto);
         } catch (Exception e) {
             LOGGER.warn("send failed consumerForCountryTopic [{}]", message);
             this.sendToDefaultDlt(new KafkaEventDto(KafkaConfig.DEFAULT_DLT_TOPIC, message));
@@ -70,7 +71,7 @@ public class KafkaConsumer {
         LOGGER.info(in + " from " + topic);
     }
 
-    public boolean sendToDefaultDlt(KafkaEventDto dto) {
+    private boolean sendToDefaultDlt(KafkaEventDto dto) {
         try {
             CompletableFuture<SendResult<String, String>> listenableFuture = this.kafkaTemplate
                     .send(KafkaConfig.DEFAULT_DLT_TOPIC, UUID.randomUUID().toString(), this.objectMapper.writeValueAsString(dto));
