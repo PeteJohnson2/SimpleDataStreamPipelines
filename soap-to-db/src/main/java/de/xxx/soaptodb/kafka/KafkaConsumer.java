@@ -38,6 +38,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 @Component
+@Transactional
 public class KafkaConsumer {
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumer.class);
     private final ObjectMapper objectMapper;
@@ -69,7 +70,6 @@ public class KafkaConsumer {
         LOGGER.info(in + " from " + topic);
     }
 
-    @Transactional
     public boolean sendToDefaultDlt(KafkaEventDto dto) {
         try {
             CompletableFuture<SendResult<String, String>> listenableFuture = this.kafkaTemplate

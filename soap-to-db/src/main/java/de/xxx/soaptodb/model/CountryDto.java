@@ -19,6 +19,9 @@ import java.util.UUID;
 public class CountryDto extends Country {
     private UUID id = UUID.randomUUID();
 
+    public CountryDto() {
+    }
+
     public CountryDto(Country country) {
         this.setCapital(country.getCapital());
         this.setCurrency(country.getCurrency());
