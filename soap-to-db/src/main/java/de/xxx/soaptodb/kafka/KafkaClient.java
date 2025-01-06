@@ -28,12 +28,13 @@ import java.util.concurrent.TimeUnit;
 public class KafkaClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaClient.class);
     private final KafkaTemplate<String, String> kafkaTemplate;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
     private final AdminClient adminClient;
 
-    public KafkaClient(KafkaTemplate<String, String> kafkaTemplate,AdminClient adminClient) {
+    public KafkaClient(KafkaTemplate<String, String> kafkaTemplate,AdminClient adminClient, ObjectMapper objectMapper) {
         this.adminClient = adminClient;
         this.kafkaTemplate = kafkaTemplate;
+        this.objectMapper = objectMapper;
     }
 
     public void sendCountryMsg(CountryDto countryDto) {
