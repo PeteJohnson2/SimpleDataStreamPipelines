@@ -25,13 +25,13 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 @Component
-public class KafkaClient {
-    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaClient.class);
+public class KafkaProducer {
+    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
     private final AdminClient adminClient;
 
-    public KafkaClient(KafkaTemplate<String, String> kafkaTemplate,AdminClient adminClient, ObjectMapper objectMapper) {
+    public KafkaProducer(KafkaTemplate<String, String> kafkaTemplate, AdminClient adminClient, ObjectMapper objectMapper) {
         this.adminClient = adminClient;
         this.kafkaTemplate = kafkaTemplate;
         this.objectMapper = objectMapper;

@@ -33,4 +33,15 @@ public class CountryDto extends Country {
     public void setId(UUID id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "CountryDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", population=" + population +
+                ", capital='" + capital + '\'' +
+                ", currency=" + currency +
+                '}';
+    }
 }

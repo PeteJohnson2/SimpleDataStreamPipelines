@@ -43,7 +43,7 @@ import java.util.Map;
 public class KafkaConfig {
     private Logger log = LoggerFactory.getLogger(KafkaConfig.class);
     public static final String COUNTRY_TOPIC = "country-topic";
-    public static final String DEFAULT_DLT_TOPIC = "default-dlt-topic";
+    public static final String DEFAULT_DLT_TOPIC = "country-topic-dlt";
 
     private final ProducerFactory<String, String> producerFactory;
     @Value("${kafka.server.name}")
@@ -80,14 +80,6 @@ public class KafkaConfig {
 
     @Bean("kafkaRetryTemplate")
     public KafkaTemplate<String, String> kafkaRetryTemplate() {
-        KafkaTemplate<String, String> kafkaTemplate = new KafkaTemplate<>(this.producerFactory);
-        kafkaTemplate.setTransactionIdPrefix(this.transactionIdPrefix);
-        kafkaTemplate.setAllowNonTransactional(true);
-        return kafkaTemplate;
-    }
-
-    @Bean("defaultRetryTopicKafkaTemplate")
-    public KafkaTemplate<String, String> defaultRetryTopicKafkaTemplate() {
         KafkaTemplate<String, String> kafkaTemplate = new KafkaTemplate<>(this.producerFactory);
         kafkaTemplate.setTransactionIdPrefix(this.transactionIdPrefix);
         kafkaTemplate.setAllowNonTransactional(true);

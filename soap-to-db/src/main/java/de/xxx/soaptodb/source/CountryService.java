@@ -14,10 +14,12 @@ package de.xxx.soaptodb.source;
 
 import com.baeldung.springsoap.gen.Country;
 import com.baeldung.springsoap.gen.WsCurrency;
-import de.xxx.soaptodb.kafka.KafkaClient;
+import de.xxx.soaptodb.kafka.KafkaProducer;
 import de.xxx.soaptodb.model.CountryDto;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -27,11 +29,12 @@ import java.util.Map;
 @Service
 @Transactional
 public class CountryService {
+    private static final Logger log = LoggerFactory.getLogger(CountryService.class);
     private static final Map<String, Country> countries = new HashMap<>();
-    private final KafkaClient kafkaClient;
+    private final KafkaProducer kafkaSender;
 
-    public CountryService(KafkaClient kafkaClient) {
-        this.kafkaClient = kafkaClient;
+    public CountryService(KafkaProducer kafkaClient) {
+        this.kafkaSender = kafkaClient;
     }
 
     @PostConstruct
@@ -65,7 +68,11 @@ public class CountryService {
         Assert.notNull(name, "The country's name must not be null");
         var country = countries.get(name);
         var myCountry = new CountryDto(country);
-        this.kafkaClient.sendCountryMsg(myCountry);
+        this.kafkaSender.sendCountryMsg(myCountry);
         return country;
+    }
+
+    public void handleReceivedCountry(CountryDto countryDto) {
+        log.info("CountryDto: {}", countryDto.toString());
     }
 }

@@ -14,9 +14,7 @@ package de.xxx.soaptodb.source;
 
 import com.baeldung.springsoap.gen.GetCountryRequest;
 import com.baeldung.springsoap.gen.GetCountryResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import de.xxx.soaptodb.kafka.KafkaClient;
-import de.xxx.soaptodb.model.CountryDto;
+import de.xxx.soaptodb.kafka.KafkaProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -30,7 +28,7 @@ public class CountryEndpoint {
     private static final String NAMESPACE_URI = "http://www.baeldung.com/springsoap/gen";
     private final CountryService countryService;
 
-    public CountryEndpoint(CountryService countryService, KafkaClient kafkaClient) {
+    public CountryEndpoint(CountryService countryService, KafkaProducer kafkaProducer) {
         this.countryService = countryService;
     }
 

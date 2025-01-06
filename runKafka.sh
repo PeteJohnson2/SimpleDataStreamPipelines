@@ -15,4 +15,4 @@ docker run -d \
     -e KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER \
     bitnami/kafka:latest
 # Start Kafka with KRaft
-docker start kafka-server
+# docker start kafka-server
