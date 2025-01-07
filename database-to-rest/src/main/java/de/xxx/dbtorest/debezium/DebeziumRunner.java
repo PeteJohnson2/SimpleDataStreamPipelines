@@ -49,12 +49,13 @@ public class DebeziumRunner {
     @Value("${datasource.password}")
     private String customerDbPassword;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
-	//private DebeziumEngine<ChangeEvent<String, String>> engine;
+	private DebeziumEngine<ChangeEvent<String, String>> engine;
 
     @EventListener
     public void onEvent(ApplicationReadyEvent event) {
     	final Properties props = new Properties();
     	props.setProperty("name", "cdc-orderproduct");
+		props.setProperty("plugin.name", "pgoutput");
     	props.setProperty("connector.class", "io.debezium.connector.postgresql.PostgresConnector");
     	props.setProperty("database.hostname", this.customerDbHost);
     	props.setProperty("database.port", this.customerDbPort);
@@ -67,20 +68,19 @@ public class DebeziumRunner {
     	props.setProperty("offset.storage.file.filename", "./offsets.dat");
     	props.setProperty("offset.flush.interval.ms", "60000");
 
-			/*
+
 		try{
 			this.engine = DebeziumEngine.create(Json.class)
     	        .using(props)
     	        .notifying(myRecord -> {
     	            LOGGER.info(myRecord.toString());
     	        })
-    	        .build());
+    	        .build();
     		this.executor.execute(this.engine);
 
-    	} catch (IOException e) {
+    	} catch (Exception e) {
     		throw new RuntimeException(e);
 		}
-    	*/
     }
     	
     	@PreDestroy

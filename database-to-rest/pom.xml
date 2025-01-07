@@ -16,19 +16,13 @@
 	<description>Pipeline from Db to Rest Endpoint</description>
 	<properties>
 		<java.version>21</java.version>
-		<debezium.version>3.0.6.Final</debezium.version>
+		<debezium.version>3.0.5.Final</debezium.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		<!--
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
