@@ -10,15 +10,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package de.xxx.dbtorest.debezium;
+package de.xxx.dbtorest.source.debezium;
 
-import java.io.IOException;
-import java.util.Properties;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
-import io.debezium.engine.format.ChangeEventFormat;
+import de.xxx.dbtorest.model.DbChange;
+import de.xxx.dbtorest.source.DbChangeService;
+import io.debezium.engine.ChangeEvent;
+import io.debezium.engine.DebeziumEngine;
+import io.debezium.engine.format.Json;
+import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,10 +25,10 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import io.debezium.engine.ChangeEvent;
-import io.debezium.engine.DebeziumEngine;
-import io.debezium.engine.format.Json;
-import jakarta.annotation.PreDestroy;
+import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class DebeziumRunner {
@@ -50,6 +49,12 @@ public class DebeziumRunner {
     private String customerDbPassword;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 	private DebeziumEngine<ChangeEvent<String, String>> engine;
+
+	private final DbChangeService dbChangeService;
+
+	public DebeziumRunner(DbChangeService dbChangeService) {
+		this.dbChangeService = dbChangeService;
+	}
 
     @EventListener
     public void onEvent(ApplicationReadyEvent event) {
@@ -73,7 +78,8 @@ public class DebeziumRunner {
 			this.engine = DebeziumEngine.create(Json.class)
     	        .using(props)
     	        .notifying(myRecord -> {
-    	            LOGGER.info(myRecord.toString());
+					this.dbChangeService.sendChange(new DbChange(myRecord.key(), myRecord.value(), myRecord.destination(), myRecord.partition()));
+    	            //LOGGER.info(myRecord.toString());
     	        })
     	        .build();
     		this.executor.execute(this.engine);
