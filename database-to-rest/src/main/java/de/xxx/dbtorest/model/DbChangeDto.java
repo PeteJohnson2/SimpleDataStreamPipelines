@@ -12,4 +12,4 @@
  */
 package de.xxx.dbtorest.model;
 
-public record DbChange(String key, String value, String destination, Integer partition) { }
+public record DbChangeDto(String key, String value, String destination, Integer partition) { }

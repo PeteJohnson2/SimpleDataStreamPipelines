@@ -12,7 +12,7 @@
  */
 package de.xxx.dbtorest.source.debezium;
 
-import de.xxx.dbtorest.model.DbChange;
+import de.xxx.dbtorest.model.DbChangeDto;
 import de.xxx.dbtorest.source.DbChangeService;
 import io.debezium.engine.ChangeEvent;
 import io.debezium.engine.DebeziumEngine;
@@ -78,7 +78,7 @@ public class DebeziumRunner {
 			this.engine = DebeziumEngine.create(Json.class)
     	        .using(props)
     	        .notifying(myRecord -> {
-					this.dbChangeService.sendChange(new DbChange(myRecord.key(), myRecord.value(), myRecord.destination(), myRecord.partition()));
+					this.dbChangeService.sendChange(new DbChangeDto(myRecord.key(), myRecord.value(), myRecord.destination(), myRecord.partition()));
     	            //LOGGER.info(myRecord.toString());
     	        })
     	        .build();

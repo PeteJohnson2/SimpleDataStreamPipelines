@@ -12,7 +12,7 @@
  */
 package de.xxx.dbtorest.source;
 
-import de.xxx.dbtorest.model.DbChange;
+import de.xxx.dbtorest.model.DbChangeDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 public class DbChangeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DbChangeService.class);
 
-    public void sendChange(DbChange dbChange) {
-        LOGGER.info(dbChange.toString());
+    public void sendChange(DbChangeDto dbChangeDto) {
+        LOGGER.info(dbChangeDto.toString());
     }
 }
