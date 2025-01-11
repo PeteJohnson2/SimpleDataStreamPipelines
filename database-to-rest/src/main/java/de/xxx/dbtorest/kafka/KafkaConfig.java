@@ -38,9 +38,9 @@ import java.util.Map;
 @Configuration
 @EnableKafka
 public class KafkaConfig {
-    private Logger log = LoggerFactory.getLogger(KafkaConfig.class);
-    public static final String COUNTRY_TOPIC = "country-topic";
-    public static final String DEFAULT_DLT_TOPIC = "country-topic-dlt";
+    private static final Logger log = LoggerFactory.getLogger(KafkaConfig.class);
+    public static final String COUNTRY_TOPIC = "orderproduct-topic";
+    public static final String DEFAULT_DLT_TOPIC = "orderproduct-topic-dlt";
 
     private final ProducerFactory<String, String> producerFactory;
     @Value("${kafka.server.name}")

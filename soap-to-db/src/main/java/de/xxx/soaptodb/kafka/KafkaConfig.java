@@ -41,7 +41,7 @@ import java.util.Map;
 @Configuration
 @EnableKafka
 public class KafkaConfig {
-    private Logger log = LoggerFactory.getLogger(KafkaConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(KafkaConfig.class);
     public static final String COUNTRY_TOPIC = "country-topic";
     public static final String DEFAULT_DLT_TOPIC = "country-topic-dlt";
 

@@ -17,7 +17,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.xxx.soaptodb.model.CountryDto;
 import de.xxx.soaptodb.model.KafkaEventDto;
 import de.xxx.soaptodb.sink.CountrySinkService;
-import de.xxx.soaptodb.source.CountrySourceService;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
