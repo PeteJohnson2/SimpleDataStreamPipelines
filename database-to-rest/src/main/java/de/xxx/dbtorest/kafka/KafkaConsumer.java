@@ -63,7 +63,7 @@ public class KafkaConsumer {
             DbChangeDto dto = this.objectMapper.readValue(message, DbChangeDto.class);
             this.dbChangeSinkService.handleDbChange(dto);
         } catch (Exception e) {
-            LOGGER.warn("send failed consumerForCountryTopic [{}]", message);
+            LOGGER.warn("send failed orderproduct-topic [{}]", message);
             this.sendToDefaultDlt(new KafkaEventDto(KafkaConfig.DEFAULT_DLT_TOPIC, message));
         }
     }

@@ -12,6 +12,8 @@
  */
 package de.xxx.dbtorest.kafka;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.annotation.PostConstruct;
 import org.apache.kafka.clients.DefaultHostResolver;
 import org.apache.kafka.clients.admin.AdminClient;
@@ -114,5 +116,12 @@ public class KafkaConfig {
     public NewTopic defaultDltTopic() {
         return TopicBuilder.name(KafkaConfig.DEFAULT_DLT_TOPIC)
                 .config(TopicConfig.COMPRESSION_TYPE_CONFIG, this.compressionType).compact().build();
+    }
+
+    @Bean
+    public ObjectMapper createObjectMapper() {
+        var objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        return objectMapper;
     }
 }

@@ -12,7 +12,11 @@
  */
 package de.xxx.dbtorest.sink;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.xxx.dbtorest.model.DbChangeDto;
+import de.xxx.dbtorest.sink.model.Payload;
+import de.xxx.dbtorest.sink.model.Wrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -21,7 +25,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class DbChangeSinkService {
     private static final Logger LOG = LoggerFactory.getLogger(DbChangeSinkService.class);
+    private final ObjectMapper objectMapper;
+
+    public DbChangeSinkService(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
     public void handleDbChange(DbChangeDto dbChangeDto) {
+        Wrapper wrapper;
+        try {
+            wrapper = this.objectMapper.readValue(dbChangeDto.value(), Wrapper.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         LOG.info("DbChange received: {}", dbChangeDto.toString());
     }
 }
