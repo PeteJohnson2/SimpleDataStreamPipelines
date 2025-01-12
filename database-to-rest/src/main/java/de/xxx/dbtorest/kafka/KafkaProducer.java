@@ -37,15 +37,15 @@ public class KafkaProducer {
         this.objectMapper = objectMapper;
     }
 
-    public void sendCountryMsg(DbChangeDto countryDto) {
+    public void sendDbChangeMsg(DbChangeDto dbChangeDto) {
         try {
-            String msg = this.objectMapper.writeValueAsString(countryDto);
+            String msg = this.objectMapper.writeValueAsString(dbChangeDto);
             CompletableFuture<SendResult<String, String>> listenableFuture = this.kafkaTemplate
-                    .send(KafkaConfig.COUNTRY_TOPIC, countryDto.key(), msg);
+                    .send(KafkaConfig.ORDERPRODUCT_TOPIC, dbChangeDto.key(), msg);
             listenableFuture.get(2, TimeUnit.SECONDS);
         } catch (Exception e) {
             throw new RuntimeException("Send Country failed.", e);
         }
-        LOGGER.info("send CountryDto msg: {}", countryDto.toString());
+        LOGGER.info("send CountryDto msg: {}", dbChangeDto.toString());
     }
 }

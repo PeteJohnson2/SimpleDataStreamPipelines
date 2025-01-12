@@ -12,16 +12,25 @@
  */
 package de.xxx.dbtorest.source;
 
+import de.xxx.dbtorest.kafka.KafkaProducer;
 import de.xxx.dbtorest.model.DbChangeDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class DbChangeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DbChangeService.class);
+    private final KafkaProducer kafkaProducer;
+
+    public DbChangeService(KafkaProducer kafkaProducer) {
+        this.kafkaProducer = kafkaProducer;
+    }
 
     public void sendChange(DbChangeDto dbChangeDto) {
-        LOGGER.info(dbChangeDto.toString());
+        //LOGGER.info(dbChangeDto.toString());
+        this.kafkaProducer.sendDbChangeMsg(dbChangeDto);
     }
 }

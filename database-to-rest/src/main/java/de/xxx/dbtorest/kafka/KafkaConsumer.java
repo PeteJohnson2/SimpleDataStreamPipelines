@@ -52,7 +52,7 @@ public class KafkaConsumer {
 
     @RetryableTopic(kafkaTemplate = "kafkaRetryTemplate", attempts = "3", backoff = @Backoff(delay = 1000, multiplier = 2.0),
             autoCreateTopics = "true", topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE)
-    @KafkaListener(topics = KafkaConfig.COUNTRY_TOPIC)
+    @KafkaListener(topics = KafkaConfig.ORDERPRODUCT_TOPIC)
     public void consumerForCountryTopic(String message) {
         //LOGGER.info("consumerForCountryTopic [{}]", message);
         try {

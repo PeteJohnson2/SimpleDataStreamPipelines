@@ -39,7 +39,7 @@ import java.util.Map;
 @EnableKafka
 public class KafkaConfig {
     private static final Logger log = LoggerFactory.getLogger(KafkaConfig.class);
-    public static final String COUNTRY_TOPIC = "orderproduct-topic";
+    public static final String ORDERPRODUCT_TOPIC = "orderproduct-topic";
     public static final String DEFAULT_DLT_TOPIC = "orderproduct-topic-dlt";
 
     private final ProducerFactory<String, String> producerFactory;
@@ -91,7 +91,7 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic newUserTopic() {
-        return TopicBuilder.name(KafkaConfig.COUNTRY_TOPIC)
+        return TopicBuilder.name(KafkaConfig.ORDERPRODUCT_TOPIC)
                 .config(TopicConfig.COMPRESSION_TYPE_CONFIG, this.compressionType).compact().build();
     }
 
