@@ -15,7 +15,9 @@ package de.xxx.dbtorest.kafka;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.xxx.dbtorest.model.DbChangeDto;
 import de.xxx.dbtorest.model.KafkaEventDto;
+import de.xxx.dbtorest.sink.DbChangeSinkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.DltHandler;
@@ -28,6 +30,7 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -36,17 +39,18 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 @Component
+@Transactional
 public class KafkaConsumer {
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumer.class);
     private final ObjectMapper objectMapper;
-    //private final CountrySinkService countrySinkService;
+    private final DbChangeSinkService dbChangeSinkService;
     private final KafkaTemplate<String,String> kafkaTemplate;
 
     public KafkaConsumer(ObjectMapper objectMapper,
-                         //CountrySinkService countrySinkService,
+                         DbChangeSinkService dbChangeSinkService,
                          KafkaTemplate<String,String> kafkaTemplate) {
         this.objectMapper = objectMapper;
-        //this.countrySinkService = countrySinkService;
+        this.dbChangeSinkService = dbChangeSinkService;
         this.kafkaTemplate = kafkaTemplate;
     }
 
@@ -56,11 +60,11 @@ public class KafkaConsumer {
     public void consumerForCountryTopic(String message) {
         //LOGGER.info("consumerForCountryTopic [{}]", message);
         try {
-            //CountryDto dto = this.objectMapper.readValue(message, CountryDto.class);
-            //this.countrySinkService.handleReceivedCountry(dto);
+            DbChangeDto dto = this.objectMapper.readValue(message, DbChangeDto.class);
+            this.dbChangeSinkService.handleDbChange(dto);
         } catch (Exception e) {
             LOGGER.warn("send failed consumerForCountryTopic [{}]", message);
-            //this.sendToDefaultDlt(new KafkaEventDto(KafkaConfig.DEFAULT_DLT_TOPIC, message));
+            this.sendToDefaultDlt(new KafkaEventDto(KafkaConfig.DEFAULT_DLT_TOPIC, message));
         }
     }
 

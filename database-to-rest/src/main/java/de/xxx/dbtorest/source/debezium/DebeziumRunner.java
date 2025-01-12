@@ -13,7 +13,7 @@
 package de.xxx.dbtorest.source.debezium;
 
 import de.xxx.dbtorest.model.DbChangeDto;
-import de.xxx.dbtorest.source.DbChangeService;
+import de.xxx.dbtorest.source.DbChangeSourceService;
 import io.debezium.engine.ChangeEvent;
 import io.debezium.engine.DebeziumEngine;
 import io.debezium.engine.format.Json;
@@ -50,10 +50,10 @@ public class DebeziumRunner {
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 	private DebeziumEngine<ChangeEvent<String, String>> engine;
 
-	private final DbChangeService dbChangeService;
+	private final DbChangeSourceService dbChangeSourceService;
 
-	public DebeziumRunner(DbChangeService dbChangeService) {
-		this.dbChangeService = dbChangeService;
+	public DebeziumRunner(DbChangeSourceService dbChangeSourceService) {
+		this.dbChangeSourceService = dbChangeSourceService;
 	}
 
     @EventListener
@@ -78,7 +78,7 @@ public class DebeziumRunner {
 			this.engine = DebeziumEngine.create(Json.class)
     	        .using(props)
     	        .notifying(myRecord -> {
-					this.dbChangeService.sendChange(new DbChangeDto(myRecord.key(), myRecord.value(), myRecord.destination(), myRecord.partition()));
+					this.dbChangeSourceService.sendChange(new DbChangeDto(myRecord.key(), myRecord.value(), myRecord.destination(), myRecord.partition()));
     	            //LOGGER.info(myRecord.toString());
     	        })
     	        .build();

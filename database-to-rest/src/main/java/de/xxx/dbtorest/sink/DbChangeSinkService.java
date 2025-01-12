@@ -10,27 +10,18 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-package de.xxx.dbtorest.source;
+package de.xxx.dbtorest.sink;
 
-import de.xxx.dbtorest.kafka.KafkaProducer;
 import de.xxx.dbtorest.model.DbChangeDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
-@Transactional
-public class DbChangeService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DbChangeService.class);
-    private final KafkaProducer kafkaProducer;
-
-    public DbChangeService(KafkaProducer kafkaProducer) {
-        this.kafkaProducer = kafkaProducer;
-    }
-
-    public void sendChange(DbChangeDto dbChangeDto) {
-        //LOGGER.info(dbChangeDto.toString());
-        this.kafkaProducer.sendDbChangeMsg(dbChangeDto);
+public class DbChangeSinkService {
+    private static final Logger LOG = LoggerFactory.getLogger(DbChangeSinkService.class);
+    public void handleDbChange(DbChangeDto dbChangeDto) {
+        LOG.info("DbChange received: {}", dbChangeDto.toString());
     }
 }
