@@ -44,8 +44,8 @@ public class KafkaProducer {
                     .send(KafkaConfig.ORDERPRODUCT_TOPIC, dbChangeDto.key(), msg);
             listenableFuture.get(2, TimeUnit.SECONDS);
         } catch (Exception e) {
-            throw new RuntimeException("Send Country failed.", e);
+            throw new RuntimeException("Send OrderProduct failed.", e);
         }
-        LOGGER.info("send CountryDto msg: {}", dbChangeDto.toString());
+        LOGGER.info("send OrderProduct msg: {}", dbChangeDto.toString());
     }
 }
