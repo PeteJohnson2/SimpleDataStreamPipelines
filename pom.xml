@@ -27,6 +27,7 @@
     <modules>
         <module>database-to-rest</module>
         <module>soap-to-db</module>
+        <module>event-to-file</module>
         <module>source-sink</module>
     </modules>
 
