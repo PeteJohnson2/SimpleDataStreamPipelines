@@ -9,11 +9,9 @@
         <module name="sourcesink" />
         <module name="soaptodb" />
         <module name="dbtorest" />
+        <module name="eventtofile" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="eventtofile" target="21" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
