@@ -12,5 +12,8 @@ limitations under the License.
  */
 package de.xxx.sourcesink.domain.model
 
-data class Entity(val id: String?, val product_name: String?, val product_quantity: Long?, val order_state: Int?) {
+import java.math.BigDecimal
+import java.util.*
+
+data class FlightDto(val id: UUID, val from: String, val to: String, val length: Long, val airline: String, val price: BigDecimal) {
 }

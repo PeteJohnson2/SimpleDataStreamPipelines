@@ -13,7 +13,6 @@ limitations under the License.
 package de.xxx.sourcesink.usecase.service
 
 import de.xxx.sourcesink.domain.client.SoapClient
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
