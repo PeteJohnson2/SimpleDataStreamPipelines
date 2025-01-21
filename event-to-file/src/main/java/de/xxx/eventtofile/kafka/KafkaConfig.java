@@ -39,6 +39,7 @@ import java.util.Map;
 @EnableKafka
 public class KafkaConfig {
     private static final Logger log = LoggerFactory.getLogger(KafkaConfig.class);
+    public static final String FLIGHT_SOURCE_TOPIC = "flight-source-topic";
     public static final String FLIGHT_TOPIC = "flight-topic";
     public static final String DEFAULT_DLT_TOPIC = "flight-topic-dlt";
 

@@ -12,25 +12,27 @@ limitations under the License.
  */
 package de.xxx.sourcesink.adapter.event
 
+import jakarta.annotation.PostConstruct
+import org.apache.kafka.clients.DefaultHostResolver
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.annotation.EnableKafka
+import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.core.ProducerFactory
+
 
 @Configuration
 @EnableKafka
-class KafkaConfig {
+class KafkaConfig(val producerFactory: ProducerFactory<String, String>) {
     companion object {
         @JvmStatic
-        val FLIGHT_TOPIC: String = "flight-topic"
-        @JvmStatic
-        val DEFAULT_DLT_TOPIC: String = "flight-topic-dlt"
+        val FLIGHT_TOPIC: String = "flight-source-topic"
     }
     private val log: Logger = LoggerFactory.getLogger(KafkaConfig::class.java)
 
-    private val producerFactory: ProducerFactory<String, String>? = null
 
     @Value("\${kafka.server.name}")
     private val kafkaServerName: String? = null
@@ -38,9 +40,27 @@ class KafkaConfig {
     @Value("\${spring.kafka.bootstrap-servers}")
     private val bootstrapServers: String? = null
 
-    @Value("\${spring.kafka.producer.transaction-id-prefix}")
-    private val transactionIdPrefix: String? = null
-
     @Value("\${spring.kafka.producer.compression-type}")
     private val compressionType: String? = null
+
+    @PostConstruct
+    fun init() {
+        val bootstrap =
+            bootstrapServers!!.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0].trim { it <= ' ' }
+        if (bootstrap.matches("^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$".toRegex())) {
+            DefaultHostResolver.IP_ADDRESS = bootstrap
+        } else if (!bootstrap.isEmpty()) {
+            DefaultHostResolver.KAFKA_SERVICE_NAME = bootstrap
+        }
+        log.info(
+            "Kafka Servername: {} Kafka Servicename: {} Ip Address: {}", DefaultHostResolver.KAFKA_SERVER_NAME,
+            DefaultHostResolver.KAFKA_SERVICE_NAME, DefaultHostResolver.IP_ADDRESS
+        )
+    }
+
+    @Bean
+    fun kafkaTemplate(): KafkaTemplate<String, String> {
+        val kafkaTemplate = KafkaTemplate(this.producerFactory)
+        return KafkaTemplate(this.producerFactory)
+    }
 }

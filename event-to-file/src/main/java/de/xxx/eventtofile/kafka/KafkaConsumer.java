@@ -49,13 +49,27 @@ public class KafkaConsumer {
     @RetryableTopic(kafkaTemplate = "kafkaRetryTemplate", attempts = "3", backoff = @Backoff(delay = 1000, multiplier = 2.0),
             autoCreateTopics = "true", topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE)
     @KafkaListener(topics = KafkaConfig.FLIGHT_TOPIC)
-    public void consumerForCountryTopic(String message) {
+    public void consumerForFlightTopic(String message) {
         //LOGGER.info("consumerForCountryTopic [{}]", message);
         try {
             var dto = this.objectMapper.readValue(message, FlightDto.class);
             //this.countrySinkService.handleReceivedCountry(dto);
         } catch (Exception e) {
-            LOGGER.warn("send failed consumerForCountryTopic [{}]", message);
+            LOGGER.warn("send failed consumerForFlightTopic [{}]", message);
+            this.sendToDefaultDlt(new KafkaEventDto(KafkaConfig.DEFAULT_DLT_TOPIC, message));
+        }
+    }
+
+    @RetryableTopic(kafkaTemplate = "kafkaRetryTemplate", attempts = "3", backoff = @Backoff(delay = 1000, multiplier = 2.0),
+            autoCreateTopics = "true", topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE)
+    @KafkaListener(topics = KafkaConfig.FLIGHT_SOURCE_TOPIC)
+    public void consumerForFlightSourceTopic(String message) {
+        //LOGGER.info("consumerForCountryTopic [{}]", message);
+        try {
+            var dto = this.objectMapper.readValue(message, FlightDto.class);
+            //this.countrySinkService.handleReceivedCountry(dto);
+        } catch (Exception e) {
+            LOGGER.warn("send failed consumerForFlightSourceTopic [{}]", message);
             this.sendToDefaultDlt(new KafkaEventDto(KafkaConfig.DEFAULT_DLT_TOPIC, message));
         }
     }

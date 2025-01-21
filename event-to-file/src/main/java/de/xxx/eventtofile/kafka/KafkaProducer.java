@@ -44,8 +44,8 @@ public class KafkaProducer {
                     .send(KafkaConfig.FLIGHT_TOPIC, flightDto.id().toString(), msg);
             listenableFuture.get(2, TimeUnit.SECONDS);
         } catch (Exception e) {
-            throw new RuntimeException("Send Country failed.", e);
+            throw new RuntimeException("Send Flight failed.", e);
         }
-        LOGGER.info("send CountryDto msg: {}", flightDto.toString());
+        LOGGER.info("send FlightDto msg: {}", flightDto.toString());
     }
 }

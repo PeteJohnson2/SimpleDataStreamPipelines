@@ -23,7 +23,6 @@ import java.util.concurrent.TimeUnit
 
 @Component
 class KafkaProducer(val kafkaTemplate: KafkaTemplate<String, String>,
-                    val adminClient: AdminClient,
                     val objectMapper: ObjectMapper) {
     private val LOGGER: Logger = LoggerFactory.getLogger(KafkaProducer::class.java)
 
