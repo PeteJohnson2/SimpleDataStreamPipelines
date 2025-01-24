@@ -16,6 +16,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.xxx.eventtofile.kafka.KafkaProducer;
 import de.xxx.eventtofile.model.FlightDto;
+import de.xxx.eventtofile.model.FlightSourceDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -31,14 +32,18 @@ public class FlightSourceService {
         this.objectMapper = objectMapper;
     }
 
-    public void handleFlightSourceEvent(FlightDto flightDto) {
-        this.logDto(flightDto);
-        this.kafkaProducer.sendCountryMsg(flightDto);
+    public void handleFlightSourceEvent(FlightSourceDto flightSourceDto) {
+        this.logDto(flightSourceDto);
+        this.kafkaProducer.sendFlightMsg(this.map(flightSourceDto));
     }
 
-    private void logDto(FlightDto flightDto) {
+    private FlightDto map(FlightSourceDto dto) {
+        return new FlightDto(dto.id(), dto.from(), dto.to(), dto.length(), dto.airline(), dto.price());
+    }
+
+    private void logDto(FlightSourceDto flightSourceDto) {
         try {
-            log.info(this.objectMapper.writeValueAsString(flightDto));
+            log.info(this.objectMapper.writeValueAsString(flightSourceDto));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

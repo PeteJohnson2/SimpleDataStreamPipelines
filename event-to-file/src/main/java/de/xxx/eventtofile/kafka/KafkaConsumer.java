@@ -15,6 +15,7 @@ package de.xxx.eventtofile.kafka;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.xxx.eventtofile.model.FlightDto;
+import de.xxx.eventtofile.model.FlightSourceDto;
 import de.xxx.eventtofile.model.KafkaEventDto;
 import de.xxx.eventtofile.source.FlightSourceService;
 import org.slf4j.Logger;
@@ -69,7 +70,7 @@ public class KafkaConsumer {
     public void consumerForFlightSourceTopic(String message) {
         //LOGGER.info("consumerForCountryTopic [{}]", message);
         try {
-            var dto = this.objectMapper.readValue(message, FlightDto.class);
+            var dto = this.objectMapper.readValue(message, FlightSourceDto.class);
             this.flightSourceService.handleFlightSourceEvent(dto);
         } catch (Exception e) {
             LOGGER.warn("send failed consumerForFlightSourceTopic [{}]", message);

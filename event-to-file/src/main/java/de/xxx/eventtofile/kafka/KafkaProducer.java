@@ -37,7 +37,7 @@ public class KafkaProducer {
         this.objectMapper = objectMapper;
     }
 
-    public void sendCountryMsg(FlightDto flightDto) {
+    public void sendFlightMsg(FlightDto flightDto) {
         try {
             String msg = this.objectMapper.writeValueAsString(flightDto);
             CompletableFuture<SendResult<String, String>> listenableFuture = this.kafkaTemplate
