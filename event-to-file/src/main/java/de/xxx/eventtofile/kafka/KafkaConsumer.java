@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.xxx.eventtofile.model.FlightDto;
 import de.xxx.eventtofile.model.FlightSourceDto;
 import de.xxx.eventtofile.model.KafkaEventDto;
+import de.xxx.eventtofile.sink.FlightSinkService;
 import de.xxx.eventtofile.source.FlightSourceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,11 +44,14 @@ public class KafkaConsumer {
     private final ObjectMapper objectMapper;
     private final KafkaTemplate<String,String> kafkaTemplate;
     private final FlightSourceService flightSourceService;
+    private final FlightSinkService flightSinkService;
 
-    public KafkaConsumer(ObjectMapper objectMapper, KafkaTemplate<String,String> kafkaTemplate, FlightSourceService flightSourceService) {
+    public KafkaConsumer(ObjectMapper objectMapper, KafkaTemplate<String,String> kafkaTemplate,
+                         FlightSourceService flightSourceService, FlightSinkService flightSinkService) {
         this.objectMapper = objectMapper;
         this.kafkaTemplate = kafkaTemplate;
         this.flightSourceService = flightSourceService;
+        this.flightSinkService = flightSinkService;
     }
 
     @RetryableTopic(kafkaTemplate = "kafkaRetryTemplate", attempts = "3", backoff = @Backoff(delay = 1000, multiplier = 2.0),
@@ -57,7 +61,7 @@ public class KafkaConsumer {
         //LOGGER.info("consumerForCountryTopic [{}]", message);
         try {
             var dto = this.objectMapper.readValue(message, FlightDto.class);
-            //this.countrySinkService.handleReceivedCountry(dto);
+            this.flightSinkService.handleFlightEvent(dto);
         } catch (Exception e) {
             LOGGER.warn("send failed consumerForFlightTopic [{}]", message);
             this.sendToDefaultDlt(new KafkaEventDto(KafkaConfig.DEFAULT_DLT_TOPIC, message));
