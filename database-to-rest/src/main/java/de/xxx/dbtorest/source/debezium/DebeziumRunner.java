@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class DebeziumRunner {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DebeziumRunner.class);
-    @Value("${datasource.host:localhost}")
+    @Value("${datasource.host}")
     private String customerDbHost;
 
     @Value("${datasource.database}")
