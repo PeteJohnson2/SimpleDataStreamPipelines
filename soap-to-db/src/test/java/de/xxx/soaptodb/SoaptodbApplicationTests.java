@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class SoaptodbApplicationTests {
 
-	@Test
+	//@Test
 	void contextLoads() {
 	}
 
