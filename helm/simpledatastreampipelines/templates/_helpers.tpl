@@ -33,16 +33,16 @@ Create chart name and version as used by the chart label.
 
 Create envApp values
 */}}
-{{- define "helpers.list-envApp-variables"}}
-{{- $secretName := .Values.secret.nameApp -}}
-{{- range $key, $val := .Values.envApp.secret }}
+{{- define "helpers.list-env-source-sink-variables"}}
+{{- $secretName := .Values.secret.nameSourceSink -}}
+{{- range $key, $val := .Values.envSourceSink.secret }}
 - name: {{ $key }}
   valueFrom:
     secretKeyRef:
       name: {{ $secretName }}
       key: {{ $key }}
 {{- end}}
-{{- range $key, $val := .Values.envApp.normal }}
+{{- range $key, $val := .Values.envSourceSink.normal }}
 - name: {{ $key }}
   value: {{ $val | quote }}
 {{- end}}

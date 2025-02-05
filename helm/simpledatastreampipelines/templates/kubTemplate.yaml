@@ -166,32 +166,32 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.webAppName }}
+  name: {{ .Values.sourceSinkAppName }}
   labels:
-    app: {{ .Values.webAppName }}    
+    app: {{ .Values.sourceSinkAppName }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Values.webAppName }}
+      app: {{ .Values.sourceSinkAppName }}
   template:
     metadata:
       labels:
-        app: {{ .Values.webAppName }}
+        app: {{ .Values.sourceSinkAppName }}
     spec:
       containers:
-      - name: {{ .Values.webAppName }}
-        image: "{{ .Values.webImageName }}:{{ .Values.webImageVersion }}" 
+      - name: {{ .Values.sourceSinkAppName }}
+        image: "{{ .Values.sourceSinkAppName }}:{{ .Values.sourceSinkImageVersion }}"
         imagePullPolicy: Always
         resources:
           limits:
-            memory: "1G"
-            cpu: "0.5"
+            memory: "384M"
+            cpu: "1"
           requests:
-            memory: "768M"
+            memory: "256M"
             cpu: "0.5"
         env:
-          {{- include "helpers.list-envApp-variables" . | indent 10 }}
+          {{- include "helpers.list-env-source-sink-variables" . | indent 10 }}
         ports:
         - containerPort: 8080
         livenessProbe:
@@ -210,13 +210,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.webServiceName }} 
+  name: {{ .Values.sourceSinkServiceName }}
   labels:
-    run: {{ .Values.webServiceName }} 
+    run: {{ .Values.sourceSinkServiceName }}
 spec:
   type: NodePort
   ports:
   - port: 8080
     protocol: TCP
   selector:
-    app: {{ .Values.webAppName }}
+    app: {{ .Values.sourceSinkAppName }}

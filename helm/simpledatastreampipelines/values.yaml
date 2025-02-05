@@ -1,15 +1,13 @@
-webAppName: moviemanagerapp
+sourceSinkAppName: sourcesinkapp
 dbName: postgresserver
-webImageName: angular2guy/moviemanager
-webImageVersion: latest
+sourceSinkImageName: angular2guy/sourcesink
+sourceSinkImageVersion: latest
 dbImageName: postgres
 dbImageVersion: 16
 volumeClaimName: postgres-pv-claim
 persistentVolumeName: task-pv-volume
-webServiceName: moviemanagerservice
+sourceSinkServiceName: sourcesinkservice
 dbServiceName: postgresservice
-#for production use replace the jwtTokenSecrect value with a random alphanumeric string of the same length or longer
-jwtTokenSecrect: secret-key1234567890abcdefghijklmnopqrstuvpxyz
 
 kafkaName: kafkaapp
 kafkaImageName: bitnami/kafka
@@ -17,10 +15,9 @@ kafkaImageVersion: latest
 kafkaServiceName: kafkaservice
 
 secret:
-  nameApp: app-env-secret
+  nameSourceSink: source-sink-env-secret
   nameDb: db-env-secret
   nameKafka: kafka-env-secret
-  nameZookeeper: zookeeper-env-secret
 
 envKafka:
   normal: 
@@ -45,51 +42,43 @@ envDb:
 envSourceSink:
   normal: 
     JPA_SHOW_SQL: true
-    H2_CONSOLE: false
     SHUTDOWN_PHASE: 10s
-    SPRING_PROFILES_ACTIVE: "prod,prod-kafka"
+    SPRING_PROFILES_ACTIVE: "prod"
     KAFKA_SERVICE_NAME: kafkaService
   secret:
-    JWTTOKEN_SECRET: secret-key1234567890abcdefghijklmnopqrstuvwxyz
     POSTGRES_USER: dbuser
     POSTGRES_PASSWORD: passwordtoreplace
-    POSTGRES_URL: "jdbc:postgresql://postgresservice:5432/movies"
+    POSTGRES_URL: "jdbc:postgresql://postgresservice:5432/datastream"
 
 envSoapToDb:
   normal:
     JPA_SHOW_SQL: true
-    H2_CONSOLE: false
     SHUTDOWN_PHASE: 10s
-    SPRING_PROFILES_ACTIVE: "prod,prod-kafka"
+    SPRING_PROFILES_ACTIVE: "prod"
     KAFKA_SERVICE_NAME: kafkaService
   secret:
-    JWTTOKEN_SECRET: secret-key1234567890abcdefghijklmnopqrstuvwxyz
     POSTGRES_USER: dbuser
     POSTGRES_PASSWORD: passwordtoreplace
-    POSTGRES_URL: "jdbc:postgresql://postgresservice:5432/movies"
+    POSTGRES_URL: "jdbc:postgresql://postgresservice:5432/datastream"
 
 envEventToFile:
   normal:
     JPA_SHOW_SQL: true
-    H2_CONSOLE: false
     SHUTDOWN_PHASE: 10s
-    SPRING_PROFILES_ACTIVE: "prod,prod-kafka"
+    SPRING_PROFILES_ACTIVE: "prod"
     KAFKA_SERVICE_NAME: kafkaService
   secret:
-    JWTTOKEN_SECRET: secret-key1234567890abcdefghijklmnopqrstuvwxyz
     POSTGRES_USER: dbuser
     POSTGRES_PASSWORD: passwordtoreplace
-    POSTGRES_URL: "jdbc:postgresql://postgresservice:5432/movies"
+    POSTGRES_URL: "jdbc:postgresql://postgresservice:5432/datastream"
 
 envDatabaseToRest:
   normal:
     JPA_SHOW_SQL: true
-    H2_CONSOLE: false
     SHUTDOWN_PHASE: 10s
-    SPRING_PROFILES_ACTIVE: "prod,prod-kafka"
+    SPRING_PROFILES_ACTIVE: "prod"
     KAFKA_SERVICE_NAME: kafkaService
   secret:
-    JWTTOKEN_SECRET: secret-key1234567890abcdefghijklmnopqrstuvwxyz
     POSTGRES_USER: dbuser
     POSTGRES_PASSWORD: passwordtoreplace
-    POSTGRES_URL: "jdbc:postgresql://postgresservice:5432/movies"
+    POSTGRES_URL: "jdbc:postgresql://postgresservice:5432/datastream"
