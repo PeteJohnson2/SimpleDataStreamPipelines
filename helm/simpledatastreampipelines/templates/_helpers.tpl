@@ -31,7 +31,7 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-Create envApp values
+Create sourceSinkApp values
 */}}
 {{- define "helpers.list-env-source-sink-variables"}}
 {{- $secretName := .Values.secret.nameSourceSink -}}

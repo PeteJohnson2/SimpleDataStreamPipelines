@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ .Values.secret.nameApp }}
+  name: {{ .Values.secret.nameSourceSink }}
 type: Opaque
 data:
-  {{- range $key, $val := .Values.envApp.secret }}
+  {{- range $key, $val := .Values.envSourceSink.secret }}
   {{ $key }}: {{ $val | b64enc }}
   {{- end}}
 ---
