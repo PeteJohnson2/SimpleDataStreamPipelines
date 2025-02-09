@@ -181,7 +181,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.sourceSinkAppName }}
-        image: "{{ .Values.sourceSinkAppName }}:{{ .Values.sourceSinkImageVersion }}"
+        image: "{{ .Values.sourceSinkImageName }}:{{ .Values.sourceSinkImageVersion }}"
         imagePullPolicy: Always
         resources:
           limits:
