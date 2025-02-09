@@ -41,7 +41,7 @@ spec:
   capacity:
     storage: 1Gi
   hostPath:
-    path: /data/postgresmm
+    path: /data/postgres{{ .Values.dbImageVersion }}
     type: DirectoryOrCreate
 ---
 apiVersion: v1
