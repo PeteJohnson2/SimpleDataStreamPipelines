@@ -31,6 +31,7 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{/*
 Create sourceSinkApp values
 */}}
 {{- define "helpers.list-env-source-sink-variables"}}
@@ -48,6 +49,7 @@ Create sourceSinkApp values
 {{- end}}
 {{- end }}
 
+{{/*
 Create envDb values
 */}}
 {{- define "helpers.list-envDb-variables"}}
@@ -78,6 +80,24 @@ Create envKafka values
       key: {{ $key }}
 {{- end}}
 {{- range $key, $val := .Values.envKafka.normal }}
+- name: {{ $key }}
+  value: {{ $val | quote }}
+{{- end}}
+{{- end }}
+
+{{/*
+Create soapToDbApp values
+*/}}
+{{- define "helpers.list-env-soap-to-db-variables"}}
+{{- $secretName := .Values.secret.nameSoapToDb -}}
+{{- range $key, $val := .Values.envSoapToDb.secret }}
+- name: {{ $key }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ $secretName }}
+      key: {{ $key }}
+{{- end}}
+{{- range $key, $val := .Values.envSoapToDb.normal }}
 - name: {{ $key }}
   value: {{ $val | quote }}
 {{- end}}

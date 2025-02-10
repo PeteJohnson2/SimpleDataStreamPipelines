@@ -8,6 +8,10 @@ volumeClaimName: postgres-pv-claim
 persistentVolumeName: task-pv-volume
 sourceSinkServiceName: sourcesinkservice
 dbServiceName: postgresservice
+soapToDbAppName: soaptodbapp
+soapToDbImageName: angular2guy/soaptodb
+soapToDbImageVersion: latest
+soapToDbServiceName: soaptodbservice
 
 kafkaName: kafkaapp
 kafkaImageName: bitnami/kafka
@@ -18,6 +22,7 @@ secret:
   nameSourceSink: source-sink-env-secret
   nameDb: db-env-secret
   nameKafka: kafka-env-secret
+  nameSoapToDb: soap-to-db-env-secret
 
 envKafka:
   normal: 
@@ -41,7 +46,7 @@ envDb:
     
 envSourceSink:
   normal: 
-    JPA_SHOW_SQL: true
+    JPA_SHOW_SQL: false
     SHUTDOWN_PHASE: 10s
     SPRING_PROFILES_ACTIVE: "prod"
     KAFKA_SERVICE_NAME: kafkaService
@@ -52,7 +57,7 @@ envSourceSink:
 
 envSoapToDb:
   normal:
-    JPA_SHOW_SQL: true
+    JPA_SHOW_SQL: false
     SHUTDOWN_PHASE: 10s
     SPRING_PROFILES_ACTIVE: "prod"
     KAFKA_SERVICE_NAME: kafkaService
@@ -63,7 +68,7 @@ envSoapToDb:
 
 envEventToFile:
   normal:
-    JPA_SHOW_SQL: true
+    JPA_SHOW_SQL: false
     SHUTDOWN_PHASE: 10s
     SPRING_PROFILES_ACTIVE: "prod"
     KAFKA_SERVICE_NAME: kafkaService
@@ -74,7 +79,7 @@ envEventToFile:
 
 envDatabaseToRest:
   normal:
-    JPA_SHOW_SQL: true
+    JPA_SHOW_SQL: false
     SHUTDOWN_PHASE: 10s
     SPRING_PROFILES_ACTIVE: "prod"
     KAFKA_SERVICE_NAME: kafkaService
