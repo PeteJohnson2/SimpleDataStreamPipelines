@@ -12,6 +12,7 @@ limitations under the License.
  */
 package de.xxx.sourcesink.adapter.client
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.oxm.jaxb.Jaxb2Marshaller
@@ -19,6 +20,9 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller
 
 @Configuration
 class SoapClientConfig {
+    @Value("\${SOAP_TO_DB_SERVER_NAME}")
+    private val soapToDbServerName: String? = null
+
     @Bean
     fun marshaller(): Jaxb2Marshaller {
         val marshaller = Jaxb2Marshaller()
@@ -29,7 +33,7 @@ class SoapClientConfig {
     @Bean
     fun soapClient(marshaller: Jaxb2Marshaller?): SoapClientBean {
         val client = SoapClientBean()
-        client.setDefaultUri("http://localhost:8082/ws")
+        client.setDefaultUri("http://${soapToDbServerName}:8082/ws")
         client.setMarshaller(marshaller)
         client.setUnmarshaller(marshaller)
         return client
