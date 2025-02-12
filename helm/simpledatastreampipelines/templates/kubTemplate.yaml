@@ -163,20 +163,6 @@ spec:
   selector:
     app: {{ .Values.kafkaName }}
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ .Values.kafkaServiceName }}
-  labels:
-    run: {{ .Values.kafkaServiceName }}
-spec:
-  type: NodePort
-  ports:
-    - port: 9092
-      protocol: TCP
-  selector:
-    app: {{ .Values.kafkaServiceName }}
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
