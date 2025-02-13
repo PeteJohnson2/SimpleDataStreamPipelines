@@ -20,7 +20,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller
 
 @Configuration
 class SoapClientConfig {
-    @Value("\${SOAP_TO_DB_SERVER_NAME}")
+    @Value("\${soaptodb.service}")
     private val soapToDbServerName: String? = null
 
     @Bean
