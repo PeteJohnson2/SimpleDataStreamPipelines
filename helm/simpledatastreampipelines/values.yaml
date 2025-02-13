@@ -50,7 +50,7 @@ envSourceSink:
     SHUTDOWN_PHASE: 10s
     SPRING_PROFILES_ACTIVE: "prod"
     KAFKA_SERVICE_NAME: kafkaService
-    SOAP_TO_DB_SERVER_NAME: soaptodbservice
+    SOAP_TO_DB_SERVICE_NAME: soaptodbservice
   secret:
     POSTGRES_USER: dbuser
     POSTGRES_PASSWORD: passwordtoreplace
