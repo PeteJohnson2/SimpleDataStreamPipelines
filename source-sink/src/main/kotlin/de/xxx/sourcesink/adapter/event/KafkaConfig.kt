@@ -35,13 +35,13 @@ class KafkaConfig(val producerFactory: ProducerFactory<String, String>) {
 
 
     @Value("\${kafka.server.name}")
-    private val kafkaServerName: String? = null
+    private lateinit var kafkaServerName: String
 
     @Value("\${spring.kafka.bootstrap-servers}")
-    private val bootstrapServers: String? = null
+    private lateinit var bootstrapServers: String
 
     @Value("\${spring.kafka.producer.compression-type}")
-    private val compressionType: String? = null
+    private lateinit var compressionType: String
 
     @PostConstruct
     fun init() {
@@ -53,9 +53,7 @@ class KafkaConfig(val producerFactory: ProducerFactory<String, String>) {
             DefaultHostResolver.KAFKA_SERVICE_NAME = bootstrap
         }
         log.info(
-            "Kafka Servername: {} Kafka Servicename: {} Ip Address: {}", DefaultHostResolver.KAFKA_SERVER_NAME,
-            DefaultHostResolver.KAFKA_SERVICE_NAME, DefaultHostResolver.IP_ADDRESS
-        )
+            "Kafka Servername: ${DefaultHostResolver.KAFKA_SERVER_NAME} Kafka Servicename: ${DefaultHostResolver.KAFKA_SERVICE_NAME} Ip Address: ${DefaultHostResolver.IP_ADDRESS}")
     }
 
     @Bean
