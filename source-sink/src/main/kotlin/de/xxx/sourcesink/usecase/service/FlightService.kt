@@ -31,7 +31,7 @@ class FlightService(val kafkaProducer: KafkaProducer) {
     private fun createFlight(): FlightDto {
         val from = destinations.get(Random.nextInt(9))
         val to = destinations.filter { it != from }.get(Random.nextInt(8))
-        return FlightDto(UUID.randomUUID(), from, to, 180L + Random.nextInt(180), airlines.get(Random.nextInt(7)), BigDecimal(
+        return FlightDto(UUID.randomUUID(), from, to, 180L + Random.nextInt(180), airlines.get(Random.nextInt(6)), BigDecimal(
             200 + Random.nextInt(400)))
     }
 }

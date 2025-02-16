@@ -282,7 +282,6 @@ metadata:
   labels:
     run: {{ .Values.soapToDbServiceName }}
 spec:
-  type: NodePort
   ports:
     - port: 8082
       protocol: TCP
