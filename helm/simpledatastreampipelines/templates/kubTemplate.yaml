@@ -79,21 +79,6 @@ spec:
     requests:
       storage: 1Gi
 ---
-apiVersion: v1
-kind: Pod
-metadata:
-  name: {{ .Values.dbPodName }}
-  labels:
-    purpose: {{ .Values.dbPodName }}
-spec:
-  containers:
-    - name: {{ .Values.dbContainerName }}
-      image: "{{ .Values.dbImageName }}:{{ .Values.dbImageVersion }}"
-      env:
-        {{- include "helpers.list-envDb-variables" . | indent 10 }}
-      args: ["-c", "wal_level=logical"]
-  restartPolicy: OnFailure
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -111,8 +96,12 @@ spec:
         app: {{ .Values.dbName }}
     spec:
       containers:
-      - name: {{ .Values.dbContainerName }}
+      - name: {{ .Values.dbName }}
         image: "{{ .Values.dbImageName }}:{{ .Values.dbImageVersion }}"
+        env:
+          {{- include "helpers.list-envDb-variables" . | indent 10 }}
+        args:
+          - "-c wal_level=logical"
         resources:
           limits:
             memory: "2G"
