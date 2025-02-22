@@ -102,3 +102,21 @@ Create soapToDbApp values
   value: {{ $val | quote }}
 {{- end}}
 {{- end }}
+
+{{/*
+Create databaseToRestApp values
+*/}}
+{{- define "helpers.list-env-database-to-rest-variables"}}
+{{- $secretName := .Values.secret.nameDatabaseToRest -}}
+{{- range $key, $val := .Values.envDatabaseToRest.secret }}
+- name: {{ $key }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ $secretName }}
+      key: {{ $key }}
+{{- end}}
+{{- range $key, $val := .Values.envDatabaseToRest.normal }}
+- name: {{ $key }}
+  value: {{ $val | quote }}
+{{- end}}
+{{- end }}

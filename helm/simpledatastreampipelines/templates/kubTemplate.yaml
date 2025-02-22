@@ -38,6 +38,16 @@ data:
     {{ $key }}: {{ $val | b64enc }}
     {{- end}}
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.secret.nameDatabaseToRest}}
+type: Opaque
+data:
+  {{- range $key, $val := .Values.envDatabaseToRest.secret }}
+    {{ $key }}: {{ $val | b64enc }}
+    {{- end}}
+---
 kind: PersistentVolume
 apiVersion: v1
 metadata:
@@ -287,3 +297,60 @@ spec:
       protocol: TCP
   selector:
     app: {{ .Values.soapToDbAppName }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.databaseToRestAppName }}
+  labels:
+    app: {{ .Values.databaseToRestAppName }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.databaseToRestAppName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.databaseToRestAppName }}
+    spec:
+      containers:
+        - name: {{ .Values.databaseToRestAppName }}
+          image: "{{ .Values.databaseToRestImageName }}:{{ .Values.databaseToRestImageVersion }}"
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "384M"
+              cpu: "1"
+            requests:
+              memory: "256M"
+              cpu: "0.5"
+          env:
+            {{- include "helpers.list-env-database-to-rest-variables" . | indent 10 }}
+          ports:
+            - containerPort: 8081
+          livenessProbe:
+            httpGet:
+              path: "/actuator/health/livenessState"
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          startupProbe:
+            httpGet:
+              path: "/actuator/health/readinessState"
+              port: 8081
+            failureThreshold: 60
+            periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.databaseToRestServiceName }}
+  labels:
+    run: {{ .Values.databaseToRestServiceName }}
+spec:
+  ports:
+    - port: 8082
+      protocol: TCP
+  selector:
+    app: {{ .Values.databaseToRestAppName }}

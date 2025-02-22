@@ -12,6 +12,10 @@ soapToDbAppName: soaptodbapp
 soapToDbImageName: angular2guy/soaptodb
 soapToDbImageVersion: latest
 soapToDbServiceName: soaptodbservice
+databaseToRestAppName: databasetorestapp
+databaseToRestImageName: angular2guy/dbtorest
+databaseToRestImageVersion: latest
+databaseToRestServiceName: databasetorestservice
 
 kafkaName: kafkaapp
 kafkaImageName: bitnami/kafka
@@ -23,6 +27,7 @@ secret:
   nameDb: db-env-secret
   nameKafka: kafka-env-secret
   nameSoapToDb: soap-to-db-env-secret
+  nameDatabaseToRest: database-to-rest-env-secret
 
 envKafka:
   normal: 
