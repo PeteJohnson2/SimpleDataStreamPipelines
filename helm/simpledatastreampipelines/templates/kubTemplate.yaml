@@ -114,7 +114,7 @@ spec:
       - name: {{ .Values.dbContainerName }}
         image: "{{ .Values.dbImageName }}:{{ .Values.dbImageVersion }}"
         env:
-          { { - include "helpers.list-envDb-variables" . | indent 10 } }
+          {{ - include "helpers.list-envDb-variables" . | indent 10 }}
         resources:
           limits:
             memory: "2G"
