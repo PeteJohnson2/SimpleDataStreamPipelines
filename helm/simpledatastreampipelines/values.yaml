@@ -4,8 +4,6 @@ sourceSinkImageName: angular2guy/sourcesink
 sourceSinkImageVersion: latest
 dbImageName: postgres
 dbImageVersion: 16
-dbPodName: postgres-pod
-dbContainerName: postgres-container
 volumeClaimName: postgres-pv-claim
 persistentVolumeName: task-pv-volume
 sourceSinkServiceName: sourcesinkservice
