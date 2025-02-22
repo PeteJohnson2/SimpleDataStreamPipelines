@@ -110,6 +110,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.dbContainerName }}
+        image: "{{ .Values.dbImageName }}:{{ .Values.dbImageVersion }}"
         resources:
           limits:
             memory: "2G"
