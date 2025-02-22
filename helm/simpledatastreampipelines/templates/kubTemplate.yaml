@@ -101,7 +101,7 @@ spec:
         env:
           {{- include "helpers.list-envDb-variables" . | indent 10 }}
         args:
-          - "-c wal_level=logical"
+          - "wal_level=logical"
         resources:
           limits:
             memory: "2G"
