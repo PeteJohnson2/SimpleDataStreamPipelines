@@ -42,7 +42,7 @@ public class KafkaProducer {
             String msg = this.objectMapper.writeValueAsString(dbChangeDto);
             CompletableFuture<SendResult<String, String>> listenableFuture = this.kafkaTemplate
                     .send(KafkaConfig.ORDERPRODUCT_TOPIC, dbChangeDto.key(), msg);
-            listenableFuture.get(2, TimeUnit.SECONDS);
+            listenableFuture.get(15, TimeUnit.SECONDS);
         } catch (Exception e) {
             throw new RuntimeException("Send OrderProduct failed.", e);
         }
