@@ -92,4 +92,7 @@ envDatabaseToRest:
   secret:
     POSTGRES_USER: dbuser
     POSTGRES_PASSWORD: passwordtoreplace
+    POSTGRES_SERVER: postgresservice
+    POSTGRES_DB: datastream
     POSTGRES_URL: "jdbc:postgresql://postgresservice:5432/datastream"
+    REST_ENDPOINT_URL: "http://sourcesinkservice:8080"
