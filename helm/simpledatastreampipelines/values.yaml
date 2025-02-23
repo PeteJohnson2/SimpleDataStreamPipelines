@@ -16,6 +16,10 @@ databaseToRestAppName: databasetorestapp
 databaseToRestImageName: angular2guy/dbtorest
 databaseToRestImageVersion: latest
 databaseToRestServiceName: databasetorestservice
+eventToFileAppName: eventtofileapp
+eventToFileImageName: angular2guy/eventtofile
+eventToFileImageVersion: latest
+eventToFileServiceName: eventtofileservice
 
 kafkaName: kafkaapp
 kafkaImageName: bitnami/kafka
@@ -28,6 +32,7 @@ secret:
   nameKafka: kafka-env-secret
   nameSoapToDb: soap-to-db-env-secret
   nameDatabaseToRest: database-to-rest-env-secret
+  nameEventToFile: event-to-file-env-secret
 
 envKafka:
   normal: 

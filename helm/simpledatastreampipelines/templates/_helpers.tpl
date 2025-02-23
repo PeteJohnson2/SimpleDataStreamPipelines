@@ -120,3 +120,21 @@ Create databaseToRestApp values
   value: {{ $val | quote }}
 {{- end}}
 {{- end }}
+
+{{/*
+Create eventToFileApp values
+*/}}
+{{- define "helpers.list-env-event-to-file-variables"}}
+{{- $secretName := .Values.secret.nameEventToFile -}}
+{{- range $key, $val := .Values.envEventToFile.secret }}
+- name: {{ $key }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ $secretName }}
+      key: {{ $key }}
+{{- end}}
+{{- range $key, $val := .Values.envEventToFile.normal }}
+- name: {{ $key }}
+  value: {{ $val | quote }}
+{{- end}}
+{{- end }}
