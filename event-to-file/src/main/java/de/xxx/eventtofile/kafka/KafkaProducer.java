@@ -42,7 +42,7 @@ public class KafkaProducer {
             String msg = this.objectMapper.writeValueAsString(flightDto);
             CompletableFuture<SendResult<String, String>> listenableFuture = this.kafkaTemplate
                     .send(KafkaConfig.FLIGHT_TOPIC, flightDto.id().toString(), msg);
-            listenableFuture.get(2, TimeUnit.SECONDS);
+            listenableFuture.get(15, TimeUnit.SECONDS);
         } catch (Exception e) {
             throw new RuntimeException("Send Flight failed.", e);
         }

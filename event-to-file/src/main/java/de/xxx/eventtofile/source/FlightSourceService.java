@@ -35,7 +35,7 @@ public class FlightSourceService {
     }
 
     public void handleFlightSourceEvent(FlightSourceDto flightSourceDto) {
-        this.logDto(flightSourceDto);
+        //this.logDto(flightSourceDto);
         this.kafkaProducer.sendFlightMsg(this.map(flightSourceDto));
     }
 

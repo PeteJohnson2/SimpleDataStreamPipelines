@@ -42,7 +42,7 @@ public class KafkaProducer {
             String msg = this.objectMapper.writeValueAsString(countryDto);
             CompletableFuture<SendResult<String, String>> listenableFuture = this.kafkaTemplate
                     .send(KafkaConfig.COUNTRY_TOPIC, countryDto.getId().toString(), msg);
-            listenableFuture.get(2, TimeUnit.SECONDS);
+            listenableFuture.get(15, TimeUnit.SECONDS);
         } catch (Exception e) {
             throw new RuntimeException("Send Country failed.", e);
         }

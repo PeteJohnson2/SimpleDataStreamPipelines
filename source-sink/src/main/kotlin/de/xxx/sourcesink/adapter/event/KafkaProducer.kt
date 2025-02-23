@@ -31,7 +31,7 @@ class KafkaProducer(val kafkaTemplate: KafkaTemplate<String, String>,
             val msg = objectMapper.writeValueAsString(flightDto)
             val listenableFuture = kafkaTemplate
                 .send(KafkaConfig.FLIGHT_TOPIC, flightDto.id.toString(), msg)
-            listenableFuture.get(2, TimeUnit.SECONDS)
+            listenableFuture.get(15, TimeUnit.SECONDS)
         } catch (e: Exception) {
             throw RuntimeException("Send Flight failed.", e)
         }
