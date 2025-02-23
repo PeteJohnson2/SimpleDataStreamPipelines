@@ -48,6 +48,16 @@ data:
     {{ $key }}: {{ $val | b64enc }}
     {{- end}}
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.secret.nameEventToFile}}
+type: Opaque
+data:
+  {{- range $key, $val := .Values.envEventToFile.secret }}
+    {{ $key }}: {{ $val | b64enc }}
+    {{- end}}
+---
 kind: PersistentVolume
 apiVersion: v1
 metadata:
