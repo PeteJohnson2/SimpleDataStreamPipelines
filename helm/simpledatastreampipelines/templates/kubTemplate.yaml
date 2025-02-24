@@ -363,7 +363,7 @@ metadata:
     run: {{ .Values.databaseToRestServiceName }}
 spec:
   ports:
-    - port: 8082
+    - port: 8081
       protocol: TCP
   selector:
     app: {{ .Values.databaseToRestAppName }}
