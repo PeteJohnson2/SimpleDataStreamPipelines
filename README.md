@@ -1,30 +1,34 @@
-# Getting Started
+# SimpeDataStreamPipelines
 
-### Reference Documentation
-For further reference, please consider the following sections:
+---
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/3.4.1/maven-plugin)
-* [Create an OCI image](https://docs.spring.io/spring-boot/3.4.1/maven-plugin/build-image.html)
-* [Spring Web](https://docs.spring.io/spring-boot/3.4.1/reference/web/servlet.html)
-* [Liquibase Migration](https://docs.spring.io/spring-boot/3.4.1/how-to/data-initialization.html#howto.data-initialization.migration-tool.liquibase)
-* [Spring Data JDBC](https://docs.spring.io/spring-boot/3.4.1/reference/data/sql.html#data.sql.jdbc)
-* [Spring for Apache Kafka](https://docs.spring.io/spring-boot/3.4.1/reference/messaging/kafka.html)
-* [Spring Boot Actuator](https://docs.spring.io/spring-boot/3.4.1/reference/actuator/index.html)
+This is a project shows howto create DataStream Pipelines based on Spring Boot and Kafka 
+that are simple, efficient and based on Jdk 21+. A DataStream Pipeline has a source that
+receives changes/requests and transforms them to events that are send to Kafka. The 
+Kafka events are received by the sink and transformed to be send to the receiving
+system. A DataStream is one Spring Boot application providing the source and sink.
+The scalability and efficiency is provided by Jdk 21+ Virtual Threads. 
 
-### Guides
-The following guides illustrate how to use some features concretely:
+Author: Sven Loesekann
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
-* [Using Spring Data JDBC](https://github.com/spring-projects/spring-data-examples/tree/master/jdbc/basics)
-* [Building a RESTful Web Service with Spring Boot Actuator](https://spring.io/guides/gs/actuator-service/)
+Technologies: Java, Kotlin, Spring Boot, Jpa, Postgresql, Soap, Rest, Kafka, Maven,
+Kubernetes, Helm
 
-### Maven Parent overrides
+[![CodeQL](https://github.com/Angular2Guy/SimpleDataStreamPipelines/actions/workflows/codeql.yml/badge.svg)](https://github.com/Angular2Guy/SimpleDataStreamPipelines/actions/workflows/codeql.yml)
 
-Due to Maven's design, elements are inherited from the parent POM to the project POM.
-While most of the inheritance is fine, it also inherits unwanted elements like `<license>` and `<developers>` from the parent.
-To prevent this, the project POM contains empty overrides for these elements.
-If you manually switch to a different parent and actually want the inheritance, you need to remove those overrides.
+## Articles
+
+---
+
+[Simple Efficient Spring/Kafka DataStreams](https://angular2guy.wordpress.com/2025/02/24/simple-efficient-spring-kafka-datastreams/)
+
+## Features
+
+---
+
+1. SourceSink Application to create changes/events/requests to be processed by the DataStreams.
+2. DatabaseToRest DataStream that uses Debezium to receive the changes in a table and send them to a rest endpoint.
+3. SoapToDb DataStream that receives Soap requests and stores them in a database with Jpa.
+4. EventToFile DataStream that receives Kafka events and stores them in files on the filesystem.
+5. A Helm chart to deploy Kafka(KRaft), Postgresql and all the applications of the system to a Minikube Kubernestes cluster.
 
