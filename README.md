@@ -22,7 +22,7 @@ Kubernetes, Helm
 
 ## Features
 
-1. SourceSink Application to create changes/events/requests to be processed by the DataStreams.
+1. SourceSink Application to create changes/events/requests to be processed by the DataStreams implemented in Kotlin.
 2. DatabaseToRest DataStream that uses Debezium to receive the changes in a table and send them to a rest endpoint.
 3. SoapToDb DataStream that receives Soap requests and stores them in a database with Jpa.
 4. EventToFile DataStream that receives Kafka events and stores them in files on the filesystem.
@@ -48,3 +48,13 @@ This project has been created to show howto create simple efficient DataStreams.
 The goal is to reduce complexity and use code instead of configuration. To do that a 
 little bit of code duplication was accepted to enable the simplicity. The architecture 
 is easy to understand and because of that easy to extend. 
+
+## Setup
+
+For development Intellij CE was used because it supports Java/Kotlin very well. 
+To run it for development the files 'runKafka.sh' and 'runPostgresql.sh' can be used 
+to run the both as local Docker images. 
+
+To create the DataStreams the commands in the 'buildDocker.sh' files in the directories
+can be used. The images need to be pushed to the DockerHub and then can be used with the 
+Helm Chart in Minikube.
