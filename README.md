@@ -20,6 +20,8 @@ Kubernetes, Helm
 
 [Simple Efficient Spring/Kafka DataStreams](https://angular2guy.wordpress.com/2025/02/24/simple-efficient-spring-kafka-datastreams/)
 
+[Using KRaft Kafka for development and Kubernetes deployment](https://angular2guy.wordpress.com/2024/08/17/using-kraft-kafka-for-development-and-kubernetes-deployment/)
+
 ## Features
 
 1. SourceSink Application to create changes/events/requests to be processed by the DataStreams implemented in Kotlin.
