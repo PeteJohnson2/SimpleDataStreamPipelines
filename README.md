@@ -28,11 +28,11 @@ Kubernetes, Helm, Docker
 2. DatabaseToRest DataStream that uses Debezium to receive the changes in a table and send them to a rest endpoint.
 3. SoapToDb DataStream that receives Soap requests and stores them in a database with Jpa.
 4. EventToFile DataStream that receives Kafka events and stores them in files on the filesystem.
-5. A Helm chart to deploy Kafka(KRaft), Postgresql and all the applications of the system to a Minikube Kubernestes cluster.
+5. A Helm chart to deploy Kafka(KRaft), Postgresql and all the applications of the system to a Minikube Kubernetes cluster.
 
 ## Mission Statement
 
-The project shows howto create and run DataStreams based on Jdk 21+. DataStreams are 
+The project shows howto create and run DataStreams based on Jdk 24+. DataStreams are 
 a single application that contains the data source that receives the requests/events/changes 
 and turns them into Kafka events and sends them to Kafka. The sink of the DataStream 
 receives the Kafka events and sends/stores them in the target system. The Virtual Threads 
