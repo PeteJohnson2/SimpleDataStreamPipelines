@@ -3,16 +3,16 @@
 ---
 
 This is a project shows howto create DataStream Pipelines based on Spring Boot and Kafka 
-that are simple, efficient and based on Jdk 21+. A DataStream Pipeline has a source that
+that are simple, efficient and based on Jdk 24+. A DataStream Pipeline has a source that
 receives changes/requests and transforms them to events that are send to Kafka. The 
 Kafka events are received by the sink and transformed to be send to the receiving
 system. A DataStream is one Spring Boot application providing the source and sink.
-The scalability and efficiency is provided by Jdk 21+ Virtual Threads. 
+The scalability and efficiency is provided by Jdk 24+ Virtual Threads(pinned Threads issue resolved).  
 
 Author: Sven Loesekann
 
 Technologies: Java, Kotlin, Spring Boot, Jpa, Postgresql, Soap, Rest, Kafka, Maven,
-Kubernetes, Helm
+Kubernetes, Helm, Docker
 
 [![CodeQL](https://github.com/Angular2Guy/SimpleDataStreamPipelines/actions/workflows/codeql.yml/badge.svg)](https://github.com/Angular2Guy/SimpleDataStreamPipelines/actions/workflows/codeql.yml)
 
