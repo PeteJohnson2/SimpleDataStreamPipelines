@@ -38,7 +38,7 @@
 	</scm>
 	<properties>
 		<jaxb-maven-plugin.version>4.0.8</jaxb-maven-plugin.version>
-		<java.version>21</java.version>
+		<java.version>25</java.version>
 		<kotlin.version>1.9.25</kotlin.version>
 	</properties>
 	<dependencies>
@@ -112,6 +112,7 @@
 				<groupId>org.jetbrains.kotlin</groupId>
 				<artifactId>kotlin-maven-plugin</artifactId>
 				<configuration>
+                    <jvmTarget>21</jvmTarget>
 					<args>
 						<arg>-Xjsr305=strict</arg>
 					</args>
