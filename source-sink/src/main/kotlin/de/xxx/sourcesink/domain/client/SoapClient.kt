@@ -13,6 +13,7 @@ limitations under the License.
 package de.xxx.sourcesink.domain.client
 
 import com.baeldung.springsoap.client.gen.GetCountryResponse
+import jakarta.xml.bind.Marshaller
 
 interface SoapClient {
     fun getCountry(country: String): GetCountryResponse

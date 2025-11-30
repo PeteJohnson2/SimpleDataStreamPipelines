@@ -12,7 +12,7 @@ limitations under the License.
  */
 package de.xxx.sourcesink.adapter.client
 
-import de.xxx.sourcesink.adapter.event.KafkaConfig
+
 import jakarta.annotation.PostConstruct
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -42,7 +42,7 @@ class SoapClientConfig {
     }
 
     @Bean
-    fun soapClient(marshaller: Jaxb2Marshaller?): SoapClientBean {
+    fun soapClient(marshaller: Jaxb2Marshaller): SoapClientBean {
         val client = SoapClientBean()
         client.setDefaultUri("http://${soapToDbServiceName}:8082/ws")
         client.setMarshaller(marshaller)
