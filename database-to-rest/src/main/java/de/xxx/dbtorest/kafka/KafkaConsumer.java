@@ -20,6 +20,7 @@ import de.xxx.dbtorest.model.KafkaEventDto;
 import de.xxx.dbtorest.sink.DbChangeSinkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.kafka.annotation.BackOff;
 import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
@@ -28,7 +29,6 @@ import org.springframework.kafka.retrytopic.TopicSuffixingStrategy;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,7 +54,7 @@ public class KafkaConsumer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    @RetryableTopic(kafkaTemplate = "kafkaRetryTemplate", attempts = "3", backoff = @Backoff(delay = 1000, multiplier = 2.0),
+    @RetryableTopic(kafkaTemplate = "kafkaRetryTemplate", attempts = "3", backOff = @BackOff(delay = 1000, multiplier = 2.0),
             autoCreateTopics = "true", topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE)
     @KafkaListener(topics = KafkaConfig.ORDERPRODUCT_TOPIC)
     public void consumerForCountryTopic(String message) {
