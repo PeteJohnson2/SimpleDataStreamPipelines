@@ -12,7 +12,6 @@
  */
 package de.xxx.dbtorest.kafka;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.xxx.dbtorest.model.DbChangeDto;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.slf4j.Logger;
@@ -20,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -28,10 +28,10 @@ import java.util.concurrent.TimeUnit;
 public class KafkaProducer {
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
     private final KafkaTemplate<String, String> kafkaTemplate;
-    private final ObjectMapper objectMapper;
+    private final JsonMapper objectMapper;
     private final AdminClient adminClient;
 
-    public KafkaProducer(KafkaTemplate<String, String> kafkaTemplate, AdminClient adminClient, ObjectMapper objectMapper) {
+    public KafkaProducer(KafkaTemplate<String, String> kafkaTemplate, AdminClient adminClient, JsonMapper objectMapper) {
         this.adminClient = adminClient;
         this.kafkaTemplate = kafkaTemplate;
         this.objectMapper = objectMapper;

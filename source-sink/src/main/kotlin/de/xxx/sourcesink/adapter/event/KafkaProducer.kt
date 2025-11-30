@@ -12,18 +12,17 @@ limitations under the License.
  */
 package de.xxx.sourcesink.adapter.event
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import de.xxx.sourcesink.domain.model.FlightDto
-import org.apache.kafka.clients.admin.AdminClient
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component
+import tools.jackson.databind.json.JsonMapper
 import java.util.concurrent.TimeUnit
 
 @Component
 class KafkaProducer(val kafkaTemplate: KafkaTemplate<String, String>,
-                    val objectMapper: ObjectMapper) {
+                    val objectMapper: JsonMapper) {
     private val LOGGER: Logger = LoggerFactory.getLogger(KafkaProducer::class.java)
 
     fun sendFlightMsg(flightDto: FlightDto) {

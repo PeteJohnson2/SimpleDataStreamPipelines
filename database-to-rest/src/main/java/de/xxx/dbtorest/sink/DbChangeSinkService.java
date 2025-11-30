@@ -22,27 +22,25 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import tools.jackson.databind.json.JsonMapper;
+
+import java.util.Optional;
 
 
 @Service
 public class DbChangeSinkService {
     private static final Logger LOG = LoggerFactory.getLogger(DbChangeSinkService.class);
-    private final ObjectMapper objectMapper;
+    private final JsonMapper objectMapper;
     private final RestClient restClient = RestClient.create();
     @Value("${rest.endpoint.url}")
     private String restEndpointUrl;
 
-    public DbChangeSinkService(ObjectMapper objectMapper) {
+    public DbChangeSinkService(JsonMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
     public void handleDbChange(DbChangeDto dbChangeDto) {
-        Wrapper wrapper;
-        try {
-            wrapper = this.objectMapper.readValue(dbChangeDto.value(), Wrapper.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        var wrapper = Optional.ofNullable( dbChangeDto.value()).stream().map(value -> this.objectMapper.readValue(value, Wrapper.class)).findFirst().orElse(new Wrapper(null, null));
         LOG.info("DbChange received: {}", dbChangeDto.toString());
         this.restClient.post().uri(this.restEndpointUrl.trim() + "/rest/orderproduct").contentType(MediaType.APPLICATION_JSON).body(wrapper).retrieve().toBodilessEntity();
     }

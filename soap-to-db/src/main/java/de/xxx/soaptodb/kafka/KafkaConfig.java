@@ -34,12 +34,14 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.listener.DeadLetterPublishingRecoverer;
 import org.springframework.kafka.transaction.KafkaTransactionManager;
 import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Configuration
 @EnableKafka
+@EnableTransactionManagement
 public class KafkaConfig {
     private static final Logger log = LoggerFactory.getLogger(KafkaConfig.class);
     public static final String COUNTRY_TOPIC = "country-topic";
