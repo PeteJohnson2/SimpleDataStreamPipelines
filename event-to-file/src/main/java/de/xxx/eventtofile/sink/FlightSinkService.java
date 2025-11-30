@@ -12,13 +12,13 @@
  */
 package de.xxx.eventtofile.sink;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.xxx.eventtofile.model.FlightDto;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,9 +30,9 @@ import java.util.stream.Stream;
 @Service
 public class FlightSinkService {
     private static final Logger log = LoggerFactory.getLogger(FlightSinkService.class);
-    private final ObjectMapper objectMapper;
+    private final JsonMapper objectMapper;
 
-    public FlightSinkService(ObjectMapper objectMapper) {
+    public FlightSinkService(JsonMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 

@@ -12,8 +12,6 @@
  */
 package de.xxx.eventtofile.source;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.xxx.eventtofile.kafka.KafkaProducer;
 import de.xxx.eventtofile.model.FlightDto;
 import de.xxx.eventtofile.model.FlightSourceDto;
@@ -21,15 +19,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.databind.json.JsonMapper;
 
 @Transactional
 @Service
 public class FlightSourceService {
     private static final Logger log = LoggerFactory.getLogger(FlightSourceService.class);
     private final KafkaProducer kafkaProducer;
-    private final ObjectMapper objectMapper;
+    private final JsonMapper objectMapper;
 
-    public FlightSourceService(KafkaProducer kafkaProducer, ObjectMapper objectMapper) {
+    public FlightSourceService(KafkaProducer kafkaProducer, JsonMapper objectMapper) {
         this.kafkaProducer = kafkaProducer;
         this.objectMapper = objectMapper;
     }
@@ -44,10 +43,6 @@ public class FlightSourceService {
     }
 
     private void logDto(FlightSourceDto flightSourceDto) {
-        try {
-            log.info(this.objectMapper.writeValueAsString(flightSourceDto));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+       log.info(this.objectMapper.writeValueAsString(flightSourceDto));
     }
 }
