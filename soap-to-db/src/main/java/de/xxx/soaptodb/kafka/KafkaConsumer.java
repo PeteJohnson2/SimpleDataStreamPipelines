@@ -12,14 +12,13 @@
  */
 package de.xxx.soaptodb.kafka;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.xxx.soaptodb.model.CountryDto;
 import de.xxx.soaptodb.model.KafkaEventDto;
 import de.xxx.soaptodb.sink.CountrySinkService;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.kafka.annotation.BackOff;
 import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
@@ -28,8 +27,8 @@ import org.springframework.kafka.retrytopic.TopicSuffixingStrategy;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -41,17 +40,17 @@ import java.util.concurrent.TimeoutException;
 @Transactional
 public class KafkaConsumer {
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumer.class);
-    private final ObjectMapper objectMapper;
+    private final JsonMapper objectMapper;
     private final CountrySinkService countrySinkService;
     private final KafkaTemplate<String,String> kafkaTemplate;
 
-    public KafkaConsumer(ObjectMapper objectMapper, CountrySinkService countrySinkService, KafkaTemplate<String,String> kafkaTemplate) {
+    public KafkaConsumer(JsonMapper objectMapper, CountrySinkService countrySinkService, KafkaTemplate<String,String> kafkaTemplate) {
         this.objectMapper = objectMapper;
         this.countrySinkService = countrySinkService;
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    @RetryableTopic(kafkaTemplate = "kafkaRetryTemplate", attempts = "3", backoff = @Backoff(delay = 1000, multiplier = 2.0),
+    @RetryableTopic(kafkaTemplate = "kafkaRetryTemplate", attempts = "3", backOff = @BackOff(delay = 1000, multiplier = 2.0),
             autoCreateTopics = "true", topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE)
     @KafkaListener(topics = KafkaConfig.COUNTRY_TOPIC)
     public void consumerForCountryTopic(String message) {
@@ -75,7 +74,7 @@ public class KafkaConsumer {
             CompletableFuture<SendResult<String, String>> listenableFuture = this.kafkaTemplate
                     .send(KafkaConfig.DEFAULT_DLT_TOPIC, UUID.randomUUID().toString(), this.objectMapper.writeValueAsString(dto));
             listenableFuture.get(3, TimeUnit.SECONDS);
-        } catch (InterruptedException | ExecutionException | TimeoutException | JsonProcessingException e) {
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);
         }
         LOGGER.info("Message send to {}. {}", KafkaConfig.DEFAULT_DLT_TOPIC, dto.toString());
