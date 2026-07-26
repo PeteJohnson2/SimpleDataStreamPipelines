@@ -218,10 +218,10 @@ spec:
         imagePullPolicy: Always
         resources:
           limits:
-            memory: "384M"
+            memory: "1G"
             cpu: "1"
           requests:
-            memory: "256M"
+            memory: "1G"
             cpu: "0.5"
         env:
           {{- include "helpers.list-env-source-sink-variables" . | indent 10 }}
@@ -276,10 +276,10 @@ spec:
           imagePullPolicy: Always
           resources:
             limits:
-              memory: "384M"
+              memory: "1G"
               cpu: "1"
             requests:
-              memory: "256M"
+              memory: "1G"
               cpu: "0.5"
           env:
             {{- include "helpers.list-env-soap-to-db-variables" . | indent 10 }}
@@ -333,10 +333,10 @@ spec:
           imagePullPolicy: Always
           resources:
             limits:
-              memory: "384M"
+              memory: "1G"
               cpu: "1"
             requests:
-              memory: "256M"
+              memory: "1G"
               cpu: "0.5"
           env:
             {{- include "helpers.list-env-database-to-rest-variables" . | indent 10 }}
@@ -390,10 +390,10 @@ spec:
           imagePullPolicy: Always
           resources:
             limits:
-              memory: "384M"
+              memory: "1G"
               cpu: "1"
             requests:
-              memory: "256M"
+              memory: "1G"
               cpu: "0.5"
           env:
             {{- include "helpers.list-env-event-to-file-variables" . | indent 10 }}
